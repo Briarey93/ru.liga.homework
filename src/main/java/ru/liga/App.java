@@ -32,7 +32,7 @@ public class App {
 
     private static final String TYPE_PERIOD = "Choice period:\n" +
             "1 - tomorrow currency course\n" +
-            "2 - last week currency course\n" +
+            "2 - next week currency course\n" +
             "Other - Exit\n";
 
     public static final String EXIT_MSG = "Exit! goodBye.";
