@@ -1,40 +1,47 @@
 package ru.liga;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class PredictionAlgorithmTest {
 
     public static final int NOT_AVERAGE = 3;
 
-    List<Double> doubleList = new ArrayList<>();
+    List<BigDecimal> doubleList = new ArrayList<>();
 
     @Test
     public void nullPointerPredict() {
-        assertEquals(-1, PredictionAlgorithm.predictAverage7(null), 0.0001);
-        assertEquals(-1, PredictionAlgorithm.predictAverage7(doubleList), 0.0001);
+        assertNull(PredictionAlgorithm.predictAverage7(null));
+        assertNull(PredictionAlgorithm.predictAverage7(doubleList));
 
         for (int i = 0; i < NOT_AVERAGE; i++) {
-            doubleList.add(1.0);
+            doubleList.add(BigDecimal.valueOf(1));
         }
-        assertEquals(-1, PredictionAlgorithm.predictAverage7(doubleList), 0.0001);
+        assertNull(PredictionAlgorithm.predictAverage7(doubleList));
     }
 
     @Test
     public void predict() {
         for (int i = 0; i < PredictionAlgorithm.AVERAGE; i++) {
-            doubleList.add(1.0);
+            doubleList.add(BigDecimal.valueOf(1));
         }
-        assertEquals(1, PredictionAlgorithm.predictAverage7(doubleList), 0.0001);
+        assertEquals(BigDecimal.valueOf(100000, 5), PredictionAlgorithm.predictAverage7(doubleList));
 
         doubleList.clear();
         for (int i = 0; i < PredictionAlgorithm.AVERAGE; i++) {
-            doubleList.add((double) i);
+            doubleList.add(BigDecimal.valueOf(i));
         }
-        assertEquals(3, PredictionAlgorithm.predictAverage7(doubleList), 0.0001);
+
+        assertEquals(BigDecimal.valueOf(300000, 5), PredictionAlgorithm.predictAverage7(doubleList));
+
+        //example
+        Assertions.assertThat(1.00000).isEqualTo(1);
     }
 }

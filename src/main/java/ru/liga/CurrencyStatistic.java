@@ -1,5 +1,6 @@
 package ru.liga;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +13,12 @@ public class CurrencyStatistic {
     /**
      * Предположительный курс на завтра.
      */
-    private double currencyTomorrow;
+    private BigDecimal currencyTomorrow;
 
     /**
      * Предположительный курс на неделю.
      */
-    private List<Double> currencyWeek = new ArrayList<>();
+    private List<BigDecimal> currencyWeek = new ArrayList<>();
 
     /**
      * Data.
@@ -29,7 +30,7 @@ public class CurrencyStatistic {
      *
      * @return - курс.
      */
-    public double getCurrencyTomorrow() {
+    public BigDecimal getCurrencyTomorrow() {
         return currencyTomorrow;
     }
 
@@ -38,7 +39,7 @@ public class CurrencyStatistic {
      *
      * @return - недельный курс.
      */
-    public List<Double> getCurrencyWeek() {
+    public List<BigDecimal> getCurrencyWeek() {
         return currencyWeek;
     }
 
@@ -65,7 +66,7 @@ public class CurrencyStatistic {
      * Предсказываемые даты.
      */
     private void predictDate() {
-        LocalDate date = this.date.get(0);
+        LocalDate date = this.date.get(this.date.size() - 1);
         this.date.clear();
         for (int i = 0; i < PredictionAlgorithm.AVERAGE; i++) {
             this.date.add(date.plusDays(i + 1));
@@ -76,9 +77,9 @@ public class CurrencyStatistic {
      * Предсказывание курса валют на неделю.
      */
     private void predictCurrencyWeek() {
-        for (int i = 0; i <= PredictionAlgorithm.AVERAGE; i++) {
-            this.currencyWeek.add(PredictionAlgorithm.predictAverage7(this.currencyWeek));
-            this.currencyWeek.remove(PredictionAlgorithm.AVERAGE - i);
+        for (int i = 0; i < PredictionAlgorithm.AVERAGE; i++) {
+            currencyWeek.add(PredictionAlgorithm.predictAverage7(currencyWeek));
+            currencyWeek.remove(0);
         }
     }
 }

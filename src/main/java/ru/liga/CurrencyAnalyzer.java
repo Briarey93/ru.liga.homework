@@ -1,5 +1,7 @@
 package ru.liga;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -18,48 +20,15 @@ public class CurrencyAnalyzer {
      */
     public void analyze(final String line) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.M.yyyy", Locale.ENGLISH);
-        StringBuilder tmp = new StringBuilder();
-        char current;
-        int i;
-        int nominal;
+        String[] num = line.split(";");
 
+        currencyStatistic.getDate().add(0, LocalDate.parse(num[1], formatter));
 
-        for (i = 0; i < line.length(); i++) {
-            current = line.charAt(i);
-            if (current == ';') {
-                break;
-            }
-            tmp.append(current);
-        }
+        num[2] = num[2].replaceFirst(",", ".");
 
-        nominal = Integer.parseInt(tmp.toString());
-        tmp = new StringBuilder();
-        i++;
+        currencyStatistic.getCurrencyWeek()
+                .add(0, new BigDecimal(num[2]).divide(BigDecimal.valueOf(Integer.parseInt(num[0])),5, RoundingMode.HALF_UP));
 
-        for (; i < line.length(); i++) {
-            current = line.charAt(i);
-            if (current == ';') {
-                break;
-            }
-            tmp.append(current);
-        }
-
-        currencyStatistic.getDate().add(LocalDate.parse(tmp.toString(), formatter));
-        tmp = new StringBuilder();
-        i++;
-
-        for (; i < line.length(); i++) {
-            current = line.charAt(i);
-            if (current == ';') {
-                break;
-            }
-            if (current == ',') {
-                current = '.';
-            }
-            tmp.append(current);
-        }
-
-        currencyStatistic.getCurrencyWeek().add(Double.parseDouble(tmp.toString()) / nominal);
     }
 
     /**

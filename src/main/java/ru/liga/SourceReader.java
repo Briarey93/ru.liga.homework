@@ -35,22 +35,19 @@ public class SourceReader {
     public CurrencyStatistic readSource() {
         CurrencyAnalyzer currencyAnalyzer = new CurrencyAnalyzer();
 
-        try (
-                FileReader fr = new FileReader(file);
-                BufferedReader br = new BufferedReader(fr)
+        try (FileReader fr = new FileReader(file);
+             BufferedReader br = new BufferedReader(fr)
         ) {
             processFile(currencyAnalyzer, br);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
 
-        currencyAnalyzer.getCurrencyStatistic().predict();
-
         return currencyAnalyzer.getCurrencyStatistic();
     }
 
     /**
-     * Построчное чтение файла с запуском анализом.
+     * Построчное чтение файла с запуском анализа.
      *
      * @param currencyAnalyzer - анализатор курсов валют.
      * @param br               - поток чтения файла.
@@ -65,10 +62,14 @@ public class SourceReader {
             System.out.println("File is empty!");
         }
 
-        int i = 0;
-        while ((line = br.readLine()) != null && i < PredictionAlgorithm.AVERAGE) {
+        for (int i = 0; i < PredictionAlgorithm.AVERAGE; i++) {
+            if ((line = br.readLine()) == null) {
+                break;
+            }
             currencyAnalyzer.analyze(line);
-            i++;
         }
+//        for (int i = 0; (line = br.readLine()) != null && i < PredictionAlgorithm.AVERAGE; i++) {
+//            currencyAnalyzer.analyze(line);
+//        }
     }
 }

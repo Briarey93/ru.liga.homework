@@ -1,5 +1,6 @@
 package ru.liga;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -37,64 +38,75 @@ public class App {
 
     public static final String EXIT_MSG = "Exit! goodBye.";
 
+
+    /**
+     * Точка входа в программу.
+     * Запрашиваем у пользователя входные параметры.
+     *
+     * @param args - входные параметры.
+     */
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        String tmp;
         int typeCurrency;
         int typePeriod;
 
         System.out.println(TYPE_SOURCE);
-
-        tmp = in.nextLine();
-        if (isStringOfDigits(tmp)) {
-            return;
-        }
-
-        typeCurrency = Integer.parseInt(tmp);
-        if (isInRange(typeCurrency)) {
+        typeCurrency = tryReadType(in);
+        if (isNotInRange(typeCurrency, 1, 3)) {
             return;
         }
 
         System.out.println(TYPE_PERIOD);
-
-        tmp = in.nextLine();
-        if (isStringOfDigits(tmp)) {
+        typePeriod = tryReadType(in);
+        if (isNotInRange(typePeriod, 1, 2)) {
             return;
         }
 
-        typePeriod = Integer.parseInt(tmp);
-        if (isInRange(typePeriod)) {
-            return;
-        }
+        executeApplication(SOURCE[typeCurrency], typePeriod);
+    }
 
+    /**
+     * Метод логики и последовательности действий приложения.
+     *
+     * @param source     - исходные данные.
+     * @param typePeriod - период искомых данных.
+     */
+    private static void executeApplication(String source, int typePeriod) {
         SourceReader sourceReader = new SourceReader();
-        sourceReader.setup(SOURCE[typeCurrency]);
-        CurrencyStatistic currencyStatistic = sourceReader.readSource();
+        sourceReader.setup(source);
+
+        CurrencyStatistic currencyStatistic;
+        try {
+            currencyStatistic = sourceReader.readSource();
+        } catch (Exception e) {
+            System.out.println("Ошибка чтения файла.");
+            return;
+        }
+
+        currencyStatistic.predict();
 
         printResult(typePeriod, currencyStatistic);
     }
 
-    private static boolean isInRange(int value) {
-        if (value > 3 || value < 1) {
-            System.out.println(EXIT_MSG);
+    private static boolean isNotInRange(int value, int left, int right) {
+        if (value < left || value > right) {
             return true;
         }
+        System.out.println(EXIT_MSG);
         return false;
     }
 
-    private static boolean isStringOfDigits(String tmp) {
-        for (char a :
-                tmp.toCharArray()) {
-            if (!Character.isDigit(a)) {
-                System.out.println(EXIT_MSG);
-                return true;
-            }
+    private static int tryReadType(Scanner in) {
+        try {
+            return in.nextInt();
+        } catch (Exception e) {
+            return 0;
         }
-        return false;
     }
 
     private static void printResult(int stateType, CurrencyStatistic currencyStatistic) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE dd.MM.yyyy - ", Locale.ENGLISH);
+
         switch (stateType) {
             case (1):
                 System.out.print("\"rate TRY tomorrow\" ");
@@ -103,7 +115,7 @@ public class App {
                 break;
             case (2):
                 List<LocalDate> resultDate = currencyStatistic.getDate();
-                List<Double> resultCurrencyStat = currencyStatistic.getCurrencyWeek();
+                List<BigDecimal> resultCurrencyStat = currencyStatistic.getCurrencyWeek();
 
                 System.out.println("\"rate USD week\"");
                 for (int i = 0; i < resultDate.size(); i++) {
