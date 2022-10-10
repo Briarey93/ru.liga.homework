@@ -36,17 +36,15 @@ public class CurrencyStatistic {
         predictDate();
         predictCurrencyWeek();
 
-        currencyTomorrow = this.currencyWeek.get(0);
+        currencyTomorrow = currencyWeek.get(PredictionAlgorithmAverage.AVERAGE - 1);
     }
 
     /**
      * Предсказываемые даты.
      */
     private void predictDate() {
-        LocalDate date = this.date.get(this.date.size() - 1);
-        this.date.clear();
         for (int i = 0; i < PredictionAlgorithmAverage.AVERAGE; i++) {
-            this.date.add(date.plusDays(i + 1));
+            date.add(0, date.get(0).plusDays(1));
         }
     }
 
@@ -55,8 +53,7 @@ public class CurrencyStatistic {
      */
     private void predictCurrencyWeek() {
         for (int i = 0; i < PredictionAlgorithmAverage.AVERAGE; i++) {
-            currencyWeek.add(new PredictionAlgorithmAverage().predict(currencyWeek));
-            currencyWeek.remove(0);
+            currencyWeek.add(0, new PredictionAlgorithmAverage().predict(currencyWeek.subList(0,PredictionAlgorithmAverage.AVERAGE)));
         }
     }
 }

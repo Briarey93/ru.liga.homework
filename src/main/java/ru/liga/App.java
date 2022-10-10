@@ -1,6 +1,8 @@
 package ru.liga;
 
 import ru.liga.currencyService.CurrencyStatistic;
+import ru.liga.predictionService.PredictionAlgorithm;
+import ru.liga.predictionService.PredictionAlgorithmAverage;
 import ru.liga.readerService.SourceReader;
 
 import java.math.BigDecimal;
@@ -113,7 +115,7 @@ public class App {
         switch (stateType) {
             case (1):
                 System.out.print("\"rate TRY tomorrow\" ");
-                System.out.print(currencyStatistic.getDate().get(0).format(formatter));
+                System.out.print(currencyStatistic.getDate().get(PredictionAlgorithmAverage.AVERAGE - 1).format(formatter));
                 System.out.printf("%.2f\n", currencyStatistic.getCurrencyTomorrow());
                 break;
             case (2):
@@ -121,7 +123,7 @@ public class App {
                 List<BigDecimal> resultCurrencyStat = currencyStatistic.getCurrencyWeek();
 
                 System.out.println("\"rate USD week\"");
-                for (int i = 0; i < resultDate.size(); i++) {
+                for (int i = PredictionAlgorithmAverage.AVERAGE - 1; i >= 0; i--) {
                     System.out.print("\t" + resultDate.get(i).format(formatter));
                     System.out.printf("%.2f\n", resultCurrencyStat.get(i));
                 }
