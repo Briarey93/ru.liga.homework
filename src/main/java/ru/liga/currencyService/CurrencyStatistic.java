@@ -1,4 +1,4 @@
-package ru.liga;
+package ru.liga.currencyService;
 
 import lombok.Getter;
 import ru.liga.predictionService.PredictionAlgorithmAverage;

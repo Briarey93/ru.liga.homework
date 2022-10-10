@@ -1,5 +1,8 @@
 package ru.liga;
 
+import ru.liga.currencyService.CurrencyStatistic;
+import ru.liga.readerService.SourceReader;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -90,9 +93,9 @@ public class App {
 
     private static boolean isNotInRange(int value, int left, int right) {
         if (value < left || value > right) {
+            System.out.println(EXIT_MSG);
             return true;
         }
-        System.out.println(EXIT_MSG);
         return false;
     }
 

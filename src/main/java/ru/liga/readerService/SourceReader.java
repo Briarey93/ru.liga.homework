@@ -1,5 +1,7 @@
-package ru.liga;
+package ru.liga.readerService;
 
+import ru.liga.currencyService.CurrencyAnalyzer;
+import ru.liga.currencyService.CurrencyStatistic;
 import ru.liga.predictionService.PredictionAlgorithmAverage;
 
 import java.io.BufferedReader;

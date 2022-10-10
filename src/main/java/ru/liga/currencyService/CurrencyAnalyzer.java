@@ -1,4 +1,4 @@
-package ru.liga;
+package ru.liga.currencyService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
