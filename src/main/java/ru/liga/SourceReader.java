@@ -1,5 +1,7 @@
 package ru.liga;
 
+import ru.liga.predictionService.PredictionAlgorithmAverage;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -62,13 +64,13 @@ public class SourceReader {
             System.out.println("File is empty!");
         }
 
-        for (int i = 0; i < PredictionAlgorithm.AVERAGE; i++) {
+        for (int i = 0; i < PredictionAlgorithmAverage.AVERAGE; i++) {
             if ((line = br.readLine()) == null) {
                 break;
             }
             currencyAnalyzer.analyze(line);
         }
-//        for (int i = 0; (line = br.readLine()) != null && i < PredictionAlgorithm.AVERAGE; i++) {
+//        for (int i = 0; (line = br.readLine()) != null && i < PredictionAlgorithmAverage.AVERAGE; i++) {
 //            currencyAnalyzer.analyze(line);
 //        }
     }

@@ -1,14 +1,17 @@
-package ru.liga;
+package ru.liga.predictionService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-public class PredictionAlgorithm {
+/**
+ * Алгоритм предсказания курса валюты на следующий день,
+ * основа - предидущие AVERAGE курсов валют.
+ * результатом является СреднееАрифметическое от основы.
+ */
+public class PredictionAlgorithmAverage implements PredictionAlgorithm {
 
     public static final int AVERAGE = 7;
-// TODO создать интерфейс и сделать реализацию отдельно на 1 и 7 дней. + новые алгоритмы предсказаний.
-// TODO забрать функцию предикт из CurrencyStatistic
 
     /**
      * Метод предсказания курса валют на неделю вперед,
@@ -17,7 +20,7 @@ public class PredictionAlgorithm {
      * @param courseList - статистика курсов до дня Х.
      * @return - список курсов валют на неделю вперед.
      */
-    public static BigDecimal predictAverage7(final List<BigDecimal> courseList) {
+    public BigDecimal predict(final List<BigDecimal> courseList) {
         if (courseList == null) {
             System.out.println("Course List is null.");
             return null;
