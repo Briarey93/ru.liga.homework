@@ -44,38 +44,56 @@ public class PredictionExecutor {
             return;
         }
 
-        // TODO: отдаю в предикшн лист, все манипуляции провожу в нём и сохраняю данные там же. вывод реализую из данных предикшена.
-        currentCurrencyStatistic.predict(predictionAlgorithm);
+        predictionAlgorithm.predict();
+        // TODO: выводит "rate USD week" на все валюты __USD__
         // TODO: реализовать печать результатов через сервис печати.
+        // TODO: найте все магические числа/строки и вынести в константы.
+        // TODO: добавить везде где можно/нужно джава доки.
         printResult();
     }
 
     private void setPredictionAlgorithmAndPrinterBasedOnLengthPeriod() {
-        switch (lengthPeriod){
-            case(1):
-                predictionAlgorithm = new PredictionAlgorithmAverage();
+        switch (lengthPeriod) {
+            case (1):
+                predictionAlgorithm = new PredictionAlgorithmAverage(currentCurrencyStatistic, predictionCurrencyStatistic, 1);
                 break;
             case (2):
-                predictionAlgorithm = new PredictionAlgorithmAverage();
+                predictionAlgorithm = new PredictionAlgorithmAverage(currentCurrencyStatistic, predictionCurrencyStatistic, 7);
+                break;
+            case (3):
+                predictionAlgorithm = new PredictionAlgorithmAverage(currentCurrencyStatistic, predictionCurrencyStatistic, 30);
                 break;
         }
     }
 
     private void printResult() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE dd.MM.yyyy - ", Locale.ENGLISH);
+        List<LocalDate> resultDate;
+        List<BigDecimal> resultCurrencyStat;
 
         switch (lengthPeriod) {
+
             case (1):
                 System.out.print("\"rate TRY tomorrow\" ");
-                System.out.print(currentCurrencyStatistic.getDate().get(PredictionAlgorithmAverage.AVERAGE - 1).format(formatter));
-                System.out.printf("%.2f\n", currentCurrencyStatistic.getCurrencyTomorrow());
+                System.out.print(predictionCurrencyStatistic.getDates().get(0).format(formatter));
+                System.out.printf("%.2f\n", predictionCurrencyStatistic.getCurrencyStatistics().get(0));
                 break;
             case (2):
-                List<LocalDate> resultDate = currentCurrencyStatistic.getDate();
-                List<BigDecimal> resultCurrencyStat = currentCurrencyStatistic.getCurrencyWeek();
+                resultDate = predictionCurrencyStatistic.getDates();
+                resultCurrencyStat = predictionCurrencyStatistic.getCurrencyStatistics();
 
                 System.out.println("\"rate USD week\"");
-                for (int i = PredictionAlgorithmAverage.AVERAGE - 1; i >= 0; i--) {
+                for (int i = 6; i >= 0; i--) {
+                    System.out.print("\t" + resultDate.get(i).format(formatter));
+                    System.out.printf("%.2f\n", resultCurrencyStat.get(i));
+                }
+                break;
+            case (3):
+                resultDate = predictionCurrencyStatistic.getDates();
+                resultCurrencyStat = predictionCurrencyStatistic.getCurrencyStatistics();
+
+                System.out.println("\"rate USD month\"");
+                for (int i = 29; i >= 0; i--) {
                     System.out.print("\t" + resultDate.get(i).format(formatter));
                     System.out.printf("%.2f\n", resultCurrencyStat.get(i));
                 }

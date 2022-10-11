@@ -1,17 +1,12 @@
 package ru.liga.predictionService.predictionAlg;
 
-import java.math.BigDecimal;
-import java.util.List;
+public class PredictionAlgorithmLinearRegression implements PredictionAlgorithm {
 
-public class PredictionAlgorithmLinearRegression implements PredictionAlgorithm{
     /**
-     * Метод предсказания.
-     *
-     * @param courseList - входные параметры для предсказания.
-     * @return - валютный курс.
+     * Алгоритм предсказания валют.
      */
     @Override
-    public BigDecimal predict(List<BigDecimal> courseList) {
-        return null;
+    public void predict() {
+
     }
 }

@@ -45,7 +45,7 @@ public class SourceReader {
             throw new IllegalStateException(e);
         }
     }
-    
+
     /**
      * Построчное чтение файла с запуском анализа
      * и записью данных в статистику.     *

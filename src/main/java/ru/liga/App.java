@@ -1,6 +1,5 @@
 package ru.liga;
 
-import lombok.Setter;
 import ru.liga.predictionService.PredictionExecutor;
 
 import java.util.Scanner;
@@ -9,11 +8,10 @@ import java.util.Scanner;
 /**
  * Course stat.
  */
-@Setter
 public class App {
 
-    public static final String SOURCE_PATH = "src/main/resources/RC_F01_01_2002_T01_10_2022_";
-    public static final String FORMAT = ".csv";
+    private static final String SOURCE_PATH = "src/main/resources/RC_F01_01_2002_T01_10_2022_";
+    private static final String FORMAT = ".csv";
 
     private static final String TYPE_DOLLAR = "DOLLAR_USA";
     private static final String TYPE_EURO = "EURO";
@@ -33,9 +31,10 @@ public class App {
     private static final String TYPE_PERIOD = "Choice period:\n" +
             "1 - tomorrow currency course\n" +
             "2 - next week currency course\n" +
+            "3 - next month course\n" +
             "Other - Exit\n";
 
-    public static final String EXIT_MSG = "Exit! goodBye.";
+    private static final String EXIT_MSG = "Exit! goodBye.";
 
     /**
      * Точка входа в программу.
@@ -56,7 +55,7 @@ public class App {
 
         System.out.println(TYPE_PERIOD);
         lengthPeriod = tryReadType(in);
-        if (isNotInRange(lengthPeriod, 1, 2)) {
+        if (isNotInRange(lengthPeriod, 1, 3)) {
             return;
         }
 
