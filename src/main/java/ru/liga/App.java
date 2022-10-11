@@ -1,21 +1,15 @@
 package ru.liga;
 
-import ru.liga.currencyService.CurrencyStatistic;
-import ru.liga.predictionService.PredictionAlgorithm;
-import ru.liga.predictionService.PredictionAlgorithmAverage;
-import ru.liga.readerService.SourceReader;
+import lombok.Setter;
+import ru.liga.predictionService.PredictionExecutor;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 
 /**
  * Course stat.
  */
+@Setter
 public class App {
 
     public static final String SOURCE_PATH = "src/main/resources/RC_F01_01_2002_T01_10_2022_";
@@ -43,7 +37,6 @@ public class App {
 
     public static final String EXIT_MSG = "Exit! goodBye.";
 
-
     /**
      * Точка входа в программу.
      * Запрашиваем у пользователя входные параметры.
@@ -53,7 +46,7 @@ public class App {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int typeCurrency;
-        int typePeriod;
+        int lengthPeriod;
 
         System.out.println(TYPE_SOURCE);
         typeCurrency = tryReadType(in);
@@ -62,38 +55,15 @@ public class App {
         }
 
         System.out.println(TYPE_PERIOD);
-        typePeriod = tryReadType(in);
-        if (isNotInRange(typePeriod, 1, 2)) {
+        lengthPeriod = tryReadType(in);
+        if (isNotInRange(lengthPeriod, 1, 2)) {
             return;
         }
 
-        executeApplication(SOURCE[typeCurrency], typePeriod);
+        new PredictionExecutor(SOURCE[typeCurrency], lengthPeriod).executeApplication();
     }
 
-    /**
-     * Метод логики и последовательности действий приложения.
-     *
-     * @param source     - исходные данные.
-     * @param typePeriod - период искомых данных.
-     */
-    private static void executeApplication(String source, int typePeriod) {
-        SourceReader sourceReader = new SourceReader();
-        sourceReader.setup(source);
-
-        CurrencyStatistic currencyStatistic;
-        try {
-            currencyStatistic = sourceReader.readSource();
-        } catch (Exception e) {
-            System.out.println("Ошибка чтения файла.");
-            return;
-        }
-
-        currencyStatistic.predict();
-
-        printResult(typePeriod, currencyStatistic);
-    }
-
-    private static boolean isNotInRange(int value, int left, int right) {
+    private static boolean isNotInRange(final int value, final int left, final int right) {
         if (value < left || value > right) {
             System.out.println(EXIT_MSG);
             return true;
@@ -101,33 +71,11 @@ public class App {
         return false;
     }
 
-    private static int tryReadType(Scanner in) {
+    private static int tryReadType(final Scanner in) {
         try {
             return in.nextInt();
         } catch (Exception e) {
             return 0;
-        }
-    }
-
-    private static void printResult(int stateType, CurrencyStatistic currencyStatistic) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE dd.MM.yyyy - ", Locale.ENGLISH);
-
-        switch (stateType) {
-            case (1):
-                System.out.print("\"rate TRY tomorrow\" ");
-                System.out.print(currencyStatistic.getDate().get(PredictionAlgorithmAverage.AVERAGE - 1).format(formatter));
-                System.out.printf("%.2f\n", currencyStatistic.getCurrencyTomorrow());
-                break;
-            case (2):
-                List<LocalDate> resultDate = currencyStatistic.getDate();
-                List<BigDecimal> resultCurrencyStat = currencyStatistic.getCurrencyWeek();
-
-                System.out.println("\"rate USD week\"");
-                for (int i = PredictionAlgorithmAverage.AVERAGE - 1; i >= 0; i--) {
-                    System.out.print("\t" + resultDate.get(i).format(formatter));
-                    System.out.printf("%.2f\n", resultCurrencyStat.get(i));
-                }
-                break;
         }
     }
 }

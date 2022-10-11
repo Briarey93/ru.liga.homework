@@ -1,7 +1,8 @@
-package ru.liga.currencyService;
+package ru.liga.predictionService;
 
 import lombok.Getter;
-import ru.liga.predictionService.PredictionAlgorithmAverage;
+import ru.liga.predictionService.predictionAlg.PredictionAlgorithm;
+import ru.liga.predictionService.predictionAlg.PredictionAlgorithmAverage;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -31,10 +32,11 @@ public class CurrencyStatistic {
 
     /**
      * Рассчёт предсказания курсов.
+     * @param predictionAlgorithm - алгоритм предсказания.
      */
-    public void predict() {
+    public void predict(PredictionAlgorithm predictionAlgorithm) {
         predictDate();
-        predictCurrencyWeek();
+        predictCurrencyWeek(predictionAlgorithm);
 
         currencyTomorrow = currencyWeek.get(PredictionAlgorithmAverage.AVERAGE - 1);
     }
@@ -51,9 +53,9 @@ public class CurrencyStatistic {
     /**
      * Предсказывание курса валют на неделю.
      */
-    private void predictCurrencyWeek() {
+    private void predictCurrencyWeek(PredictionAlgorithm predictionAlgorithm) {
         for (int i = 0; i < PredictionAlgorithmAverage.AVERAGE; i++) {
-            currencyWeek.add(0, new PredictionAlgorithmAverage().predict(currencyWeek.subList(0,PredictionAlgorithmAverage.AVERAGE)));
+            currencyWeek.add(0, predictionAlgorithm.predict(currencyWeek.subList(0, 7)));
         }
     }
 }

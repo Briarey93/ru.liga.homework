@@ -1,4 +1,4 @@
-package ru.liga.currencyService;
+package ru.liga.predictionService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -10,7 +10,11 @@ public class CurrencyAnalyzer {
     /**
      * Статистика валюты.
      */
-    final private CurrencyStatistic currencyStatistic = new CurrencyStatistic();
+    final private CurrencyStatistic currencyStatistic;
+
+    public CurrencyAnalyzer(CurrencyStatistic currencyStatistic) {
+        this.currencyStatistic = currencyStatistic;
+    }
 
     /**
      * Анализатор строки формата "nominal;data;curs"

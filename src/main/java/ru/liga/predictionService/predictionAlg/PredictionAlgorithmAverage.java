@@ -1,4 +1,4 @@
-package ru.liga.predictionService;
+package ru.liga.predictionService.predictionAlg;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -1,8 +1,4 @@
-package ru.liga.readerService;
-
-import ru.liga.currencyService.CurrencyAnalyzer;
-import ru.liga.currencyService.CurrencyStatistic;
-import ru.liga.predictionService.PredictionAlgorithmAverage;
+package ru.liga.predictionService;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,6 +11,12 @@ public class SourceReader {
      * Файл для чтения.
      */
     private File file;
+
+    private CurrencyStatistic currentCurrencyStatistic;
+
+    public SourceReader(CurrencyStatistic currentCurrencyStatistic) {
+        this.currentCurrencyStatistic = currentCurrencyStatistic;
+    }
 
     /**
      * Установка файла для чтения.
@@ -33,32 +35,25 @@ public class SourceReader {
 
     /**
      * Чтение файла.
-     *
-     * @return - статистика валюты.
      */
-    public CurrencyStatistic readSource() {
-        CurrencyAnalyzer currencyAnalyzer = new CurrencyAnalyzer();
-
+    public void readSource() {
         try (FileReader fr = new FileReader(file);
              BufferedReader br = new BufferedReader(fr)
         ) {
-            processFile(currencyAnalyzer, br);
+            processFile(br);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
-
-        return currencyAnalyzer.getCurrencyStatistic();
     }
-
+    
     /**
-     * Построчное чтение файла с запуском анализа.
+     * Построчное чтение файла с запуском анализа
+     * и записью данных в статистику.     *
      *
-     * @param currencyAnalyzer - анализатор курсов валют.
-     * @param br               - поток чтения файла.
-     * @throws IOException - исключение.
+     * @param br - ридер.
+     * @throws IOException - ошибка чтения.
      */
     private void processFile(
-            final CurrencyAnalyzer currencyAnalyzer,
             final BufferedReader br)
             throws IOException {
         String line;
@@ -67,16 +62,7 @@ public class SourceReader {
         }
 
         while ((line = br.readLine()) != null) {
-            currencyAnalyzer.analyze(line);
+            new CurrencyAnalyzer(currentCurrencyStatistic).analyze(line);
         }
-//        for (int i = 0; i < PredictionAlgorithmAverage.AVERAGE; i++) {
-//            if ((line = br.readLine()) == null) {
-//                break;
-//            }
-//            currencyAnalyzer.analyze(line);
-//        }
-//        for (int i = 0; (line = br.readLine()) != null && i < PredictionAlgorithmAverage.AVERAGE; i++) {
-//            currencyAnalyzer.analyze(line);
-//        }
     }
 }
