@@ -19,24 +19,21 @@ public class PredictionAlgorithmAverage implements PredictionAlgorithm {
     private static final String CAN_T_CALCULATE_PREDICTION_COURSE_LIST_TOO_SMALL = "Can't calculate prediction. Course List too small.";
     private static final String COURSE_LIST_IS_NULL = "Course List is null.";
 
-    private final int LENGTH_PERIOD;
+    private int LENGTH_PERIOD;
 
-    private final CurrencyStatistic currentCurrencyStatistic;
-    private final CurrencyStatistic predictionCurrencyStatistic;
-
-    public PredictionAlgorithmAverage(CurrencyStatistic currentCurrencyStatistic,
-                                      CurrencyStatistic predictionCurrencyStatistic,
-                                      int lengthPeriod) {
-        LENGTH_PERIOD = lengthPeriod;
-        this.currentCurrencyStatistic = currentCurrencyStatistic;
-        this.predictionCurrencyStatistic = predictionCurrencyStatistic;
-    }
+    private CurrencyStatistic currentCurrencyStatistic;
+    private CurrencyStatistic predictionCurrencyStatistic;
 
     /**
      * Алгоритм предсказания валют.
      */
     @Override
-    public void predict() {
+    public void predict(CurrencyStatistic currentCurrencyStatistic,
+                        CurrencyStatistic predictionCurrencyStatistic,
+                        int lengthPeriod) {
+        LENGTH_PERIOD = lengthPeriod;
+        this.currentCurrencyStatistic = currentCurrencyStatistic;
+        this.predictionCurrencyStatistic = predictionCurrencyStatistic;
         List<BigDecimal> courseList = currentCurrencyStatistic.getCurrencyStatistics().subList(0, AVERAGE);
         if (courseList.isEmpty()) {
             System.out.println(COURSE_LIST_IS_NULL);

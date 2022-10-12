@@ -16,7 +16,7 @@ public class PredictionAlgorithmAverageTest {
     public static final int NOT_AVERAGE = 3;
 
     List<BigDecimal> doubleList = new ArrayList<>();
-    PredictionAlgorithmAverage predictionAlgorithmAverage = new PredictionAlgorithmAverage(new CurrencyStatistic(),new CurrencyStatistic(),0);
+//    PredictionAlgorithmAverage predictionAlgorithmAverage = new PredictionAlgorithmAverage(new CurrencyStatistic(),new CurrencyStatistic(),0);
 
 //    @Test(expected = IllegalArgumentException.class)
 //    public void nullPointerPredict() {

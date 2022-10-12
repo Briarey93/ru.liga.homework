@@ -1,16 +1,18 @@
 package ru.liga.predictionService;
 
 import ru.liga.predictionService.predictionAlg.PredictionAlgorithm;
-import ru.liga.predictionService.predictionAlg.PredictionAlgorithmAverage;
+import ru.liga.predictionService.predictionAlg.PredictionAlgorithmFactory;
+import ru.liga.predictionService.predictionAlg.PredictionAlgorithmFactoryAverage;
 import ru.liga.predictionService.predictionPrinter.PrintPrediction;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class PredictionExecutor {
-    private final int LENGTH_PERIOD;
-    private final String CURRENCY_TYPE;
     private SourceReader sourceReader;
+    private final String CURRENCY_TYPE;
+    private final String ALGORITHM_TYPE;
+    private final int LENGTH_PERIOD;
 
     private CurrencyStatistic currentCurrencyStatistic;
     private CurrencyStatistic predictionCurrencyStatistic;
@@ -20,9 +22,13 @@ public class PredictionExecutor {
     private PrintPrediction printPrediction;
 
 
-    public PredictionExecutor(final String source, final int lengthPeriod, final String currencyType) {
+    public PredictionExecutor(final String source,
+                              final String currencyType,
+                              final String algorithmType,
+                              final int lengthPeriod) {
         CURRENCY_TYPE = currencyType;
-        this.LENGTH_PERIOD = lengthPeriod;
+        ALGORITHM_TYPE = algorithmType;
+        LENGTH_PERIOD = lengthPeriod;
 
         currentCurrencyStatistic = new CurrencyStatistic();
         predictionCurrencyStatistic = new CurrencyStatistic();
@@ -30,7 +36,16 @@ public class PredictionExecutor {
         sourceReader = new SourceReader(currentCurrencyStatistic);
         sourceReader.setup(source);
 
-        setPredictionAlgorithmAndPrinterBasedOnLengthPeriod();
+        PredictionAlgorithmFactory predictionAlgorithmFactory =
+                createPredictionAlgorithmAndPrinterPredictionBasedOnAlgorithmType();
+        predictionAlgorithm = predictionAlgorithmFactory.createPredictionAlgorithm();
+        printPrediction = predictionAlgorithmFactory.createPrintPrediction();
+    }
+
+    private PredictionAlgorithmFactory createPredictionAlgorithmAndPrinterPredictionBasedOnAlgorithmType() {
+        if(ALGORITHM_TYPE.equalsIgnoreCase("average"))
+            return new PredictionAlgorithmFactoryAverage();
+        throw new RuntimeException(ALGORITHM_TYPE + " is unknown algorithm type.");
     }
 
     /**
@@ -47,16 +62,11 @@ public class PredictionExecutor {
         if (currentCurrencyStatistic.getCurrencyStatistics().isEmpty()) {
             return;
         }
-        predictionAlgorithm.predict();
+        predictionAlgorithm.predict(currentCurrencyStatistic, predictionCurrencyStatistic, LENGTH_PERIOD);
         // TODO: реализовать печать результатов через class печати.
-        // TODO: найте все магические числа/строки и вынести в константы.
         // TODO: добавить везде где можно/нужно джава доки.
         // TODO: весь вывод должен быть на одном языке во всех файлах.
         printResult();
-    }
-
-    private void setPredictionAlgorithmAndPrinterBasedOnLengthPeriod() {
-        predictionAlgorithm = new PredictionAlgorithmAverage(currentCurrencyStatistic, predictionCurrencyStatistic, LENGTH_PERIOD);
     }
 
     private void printResult() {

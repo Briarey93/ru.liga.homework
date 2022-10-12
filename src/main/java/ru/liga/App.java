@@ -17,11 +17,17 @@ public class App {
     private static final String TYPE_EURO = "EURO";
     private static final String TYPE_LIRA = "Turkish_LIRA";
 
-    private static final String[] SOURCE_TYPE = new String[]{
+    private static final String[] SOURCE_TYPE = {
             "",
             TYPE_DOLLAR,
             TYPE_EURO,
             TYPE_LIRA};
+
+    private static final String[] ALGORITHM_TYPE = {
+            "",
+            "Average"};
+
+    private static final int[] LENGTH_PERIOD = {0, 1, 7, 30};
 
     private static final String PRINT_CHOICE_SOURCE_TYPE_MSG =
             "Выберите интересующую вас валюту:\n" +
@@ -32,6 +38,11 @@ public class App {
 
     private static final String PRINT_CHOICE_ALGORITHM_TYPE_MSG =
             "Выберите алгоритм предсказания курса:\n" +
+                    "1 - Среднее арифметическое\n" +
+                    "Other - Exit\n";
+
+    private static final String PRINT_CHOICE_LENGTH_PERIOD_MSG =
+            "Выберите период предсказания курса:\n" +
                     "1 - Среднее арифметическое на 1 день\n" +
                     "2 - Среднее арифметическое на 7 дней\n" +
                     "3 - Среднее арифметическое на 30 дней\n" +
@@ -39,7 +50,6 @@ public class App {
 
     private static final String EXIT_MSG = "Exit! goodBye.";
 
-    private static final int[] ALGORITHM_TYPE = {0, 1, 7, 30};
 
     /**
      * Точка входа в программу.
@@ -51,6 +61,8 @@ public class App {
         Scanner in = new Scanner(System.in);
         int typeCurrency;
         int typeAlgorithm;
+        int lengthPeriod = 0;
+
 
         System.out.println(PRINT_CHOICE_SOURCE_TYPE_MSG);
         typeCurrency = tryReadNextInteger(in);
@@ -60,14 +72,25 @@ public class App {
 
         System.out.println(PRINT_CHOICE_ALGORITHM_TYPE_MSG);
         typeAlgorithm = tryReadNextInteger(in);
-        if (isNotInRange(typeAlgorithm, 1, 3)) {
+        if (isNotInRange(typeAlgorithm, 1, ALGORITHM_TYPE.length - 1)) {
             return;
         }
 
+        if (typeAlgorithm == 1) {
+            System.out.println(PRINT_CHOICE_LENGTH_PERIOD_MSG);
+            lengthPeriod = tryReadNextInteger(in);
+            if (isNotInRange(typeAlgorithm, 1, LENGTH_PERIOD.length - 1)) {
+                return;
+            }
+        }
+
+
         new PredictionExecutor(
                 SOURCE_PATH + SOURCE_TYPE[typeCurrency] + FORMAT,
+                SOURCE_TYPE[typeCurrency],
                 ALGORITHM_TYPE[typeAlgorithm],
-                SOURCE_TYPE[typeCurrency]).executeApplication();
+                LENGTH_PERIOD[lengthPeriod])
+                .executeApplication();
     }
 
     private static boolean isNotInRange(final int value, final int left, final int right) {
