@@ -15,6 +15,10 @@ import java.util.List;
 public class PredictionAlgorithmAverage implements PredictionAlgorithm {
 
     private final static int AVERAGE = 7;
+    private final static int SCALE = 5;
+    private static final String CAN_T_CALCULATE_PREDICTION_COURSE_LIST_TOO_SMALL = "Can't calculate prediction. Course List too small.";
+    private static final String COURSE_LIST_IS_NULL = "Course List is null.";
+
     private final int LENGTH_PERIOD;
 
     private final CurrencyStatistic currentCurrencyStatistic;
@@ -35,11 +39,11 @@ public class PredictionAlgorithmAverage implements PredictionAlgorithm {
     public void predict() {
         List<BigDecimal> courseList = currentCurrencyStatistic.getCurrencyStatistics().subList(0, AVERAGE);
         if (courseList.isEmpty()) {
-            System.out.println("Course List is null.");
+            System.out.println(COURSE_LIST_IS_NULL);
             return;
         }
         if (courseList.size() < AVERAGE) {
-            System.out.println("Can't calculate prediction. Course List too small.");
+            System.out.println(CAN_T_CALCULATE_PREDICTION_COURSE_LIST_TOO_SMALL);
             return;
         }
 
@@ -59,6 +63,6 @@ public class PredictionAlgorithmAverage implements PredictionAlgorithm {
     private BigDecimal predictNextCurrency(List<BigDecimal> courseList) {
         return courseList.stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
-                .divide(BigDecimal.valueOf(AVERAGE), 5, RoundingMode.HALF_UP);
+                .divide(BigDecimal.valueOf(AVERAGE), SCALE, RoundingMode.HALF_UP);
     }
 }

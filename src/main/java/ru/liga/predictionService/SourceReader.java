@@ -7,6 +7,10 @@ import java.io.IOException;
 
 public class SourceReader {
 
+    private static final String FILE_IS_EMPTY = "File is empty!";
+    private static final String SOURCE_NULL = "source == null";
+    private static final String SOURCE_FILE_IS_NOT_EXIST = "source file is not exist";
+
     /**
      * Файл для чтения.
      */
@@ -25,11 +29,11 @@ public class SourceReader {
      */
     public void setup(final String source) {
         if (source == null) {
-            throw new IllegalArgumentException("source == null");
+            throw new IllegalArgumentException(SOURCE_NULL);
         }
         file = new File(source);
         if (!file.exists()) {
-            throw new IllegalArgumentException("source file is not exist");
+            throw new IllegalArgumentException(SOURCE_FILE_IS_NOT_EXIST);
         }
     }
 
@@ -58,7 +62,7 @@ public class SourceReader {
             throws IOException {
         String line;
         if (br.readLine() == null) {
-            System.out.println("File is empty!");
+            System.out.println(FILE_IS_EMPTY);
         }
 
         while ((line = br.readLine()) != null) {

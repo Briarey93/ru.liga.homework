@@ -44,10 +44,14 @@ public class PredictionExecutor {
             return;
         }
 
+        if (currentCurrencyStatistic.getCurrencyStatistics().isEmpty()) {
+            return;
+        }
         predictionAlgorithm.predict();
         // TODO: реализовать печать результатов через class печати.
         // TODO: найте все магические числа/строки и вынести в константы.
         // TODO: добавить везде где можно/нужно джава доки.
+        // TODO: весь вывод должен быть на одном языке во всех файлах.
         printResult();
     }
 
