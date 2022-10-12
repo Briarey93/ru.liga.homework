@@ -17,29 +17,24 @@ public class App {
     private static final String TYPE_EURO = "EURO";
     private static final String TYPE_LIRA = "Turkish_LIRA";
 
-    private static final String[] SOURCE_TYPE = new String[]{
-            "",
-            TYPE_DOLLAR,
-            TYPE_EURO,
-            TYPE_LIRA};
+    private final static String[] SOURCE = new String[]{"",
+            SOURCE_PATH + TYPE_DOLLAR + FORMAT,
+            SOURCE_PATH + TYPE_EURO + FORMAT,
+            SOURCE_PATH + TYPE_LIRA + FORMAT};
 
-    private static final String PRINT_CHOICE_SOURCE_TYPE_MSG =
-            "Выберите интересующую вас валюту:\n" +
-                    "1 - " + TYPE_DOLLAR + "\n" +
-                    "2 - " + TYPE_EURO + "\n" +
-                    "3 - " + TYPE_LIRA + "\n" +
-                    "Other - Exit\n";
+    private static final String TYPE_SOURCE = "Choice currency:\n" +
+            "1 - " + TYPE_DOLLAR + "\n" +
+            "2 - " + TYPE_EURO + "\n" +
+            "3 - " + TYPE_LIRA + " Lira\n" +
+            "Other - Exit\n";
 
-    private static final String PRINT_CHOICE_ALGORITHM_TYPE_MSG =
-            "Выберите алгоритм предсказания курса:\n" +
-                    "1 - Среднее арифметическое на 1 день\n" +
-                    "2 - Среднее арифметическое на 7 дней\n" +
-                    "3 - Среднее арифметическое на 30 дней\n" +
-                    "Other - Exit\n";
+    private static final String TYPE_PERIOD = "Choice period:\n" +
+            "1 - tomorrow currency course\n" +
+            "2 - next week currency course\n" +
+            "3 - next month course\n" +
+            "Other - Exit\n";
 
     private static final String EXIT_MSG = "Exit! goodBye.";
-
-    private static final int[] ALGORITHM_TYPE = {0, 1, 7, 30};
 
     /**
      * Точка входа в программу.
@@ -50,24 +45,21 @@ public class App {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int typeCurrency;
-        int typeAlgorithm;
+        int lengthPeriod;
 
-        System.out.println(PRINT_CHOICE_SOURCE_TYPE_MSG);
-        typeCurrency = tryReadNextInteger(in);
-        if (isNotInRange(typeCurrency, 1, SOURCE_TYPE.length - 1)) {
+        System.out.println(TYPE_SOURCE);
+        typeCurrency = tryReadType(in);
+        if (isNotInRange(typeCurrency, 1, 3)) {
             return;
         }
 
-        System.out.println(PRINT_CHOICE_ALGORITHM_TYPE_MSG);
-        typeAlgorithm = tryReadNextInteger(in);
-        if (isNotInRange(typeAlgorithm, 1, 3)) {
+        System.out.println(TYPE_PERIOD);
+        lengthPeriod = tryReadType(in);
+        if (isNotInRange(lengthPeriod, 1, 3)) {
             return;
         }
 
-        new PredictionExecutor(
-                SOURCE_PATH + SOURCE_TYPE[typeCurrency] + FORMAT,
-                ALGORITHM_TYPE[typeAlgorithm],
-                SOURCE_TYPE[typeCurrency]).executeApplication();
+        new PredictionExecutor(SOURCE[typeCurrency], lengthPeriod).executeApplication();
     }
 
     private static boolean isNotInRange(final int value, final int left, final int right) {
@@ -78,7 +70,7 @@ public class App {
         return false;
     }
 
-    private static int tryReadNextInteger(final Scanner in) {
+    private static int tryReadType(final Scanner in) {
         try {
             return in.nextInt();
         } catch (Exception e) {

@@ -4,7 +4,6 @@ import ru.liga.predictionService.CurrencyStatistic;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -50,10 +49,6 @@ public class PredictionAlgorithmAverage implements PredictionAlgorithm {
         }
 
         predictionCurrencyStatistic.getCurrencyStatistics().addAll(courseList.subList(0, LENGTH_PERIOD));
-
-        Collections.reverse(predictionCurrencyStatistic.getDates());
-        Collections.reverse(predictionCurrencyStatistic.getCurrencyStatistics());
-        predictionCurrencyStatistic.getDates().remove(0);
     }
 
     private BigDecimal predictNextCurrency(List<BigDecimal> courseList) {
