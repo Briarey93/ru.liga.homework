@@ -17,7 +17,6 @@ public class PredictionExecutor {
     private CurrencyStatistic currentCurrencyStatistic;
     private CurrencyStatistic predictionCurrencyStatistic;
 
-
     private PredictionAlgorithm predictionAlgorithm;
     private PrintPrediction printPrediction;
 
@@ -37,13 +36,13 @@ public class PredictionExecutor {
         sourceReader.setup(source);
 
         PredictionAlgorithmFactory predictionAlgorithmFactory =
-                createPredictionAlgorithmAndPrinterPredictionBasedOnAlgorithmType();
+                createPredictionAlgorithm_AndPrinterPrediction_BasedOnAlgorithmType();
         predictionAlgorithm = predictionAlgorithmFactory.createPredictionAlgorithm();
         printPrediction = predictionAlgorithmFactory.createPrintPrediction();
     }
 
-    private PredictionAlgorithmFactory createPredictionAlgorithmAndPrinterPredictionBasedOnAlgorithmType() {
-        if(ALGORITHM_TYPE.equalsIgnoreCase("average"))
+    private PredictionAlgorithmFactory createPredictionAlgorithm_AndPrinterPrediction_BasedOnAlgorithmType() {
+        if (ALGORITHM_TYPE.equalsIgnoreCase("average"))
             return new PredictionAlgorithmFactoryAverage();
         throw new RuntimeException(ALGORITHM_TYPE + " is unknown algorithm type.");
     }
@@ -63,10 +62,11 @@ public class PredictionExecutor {
             return;
         }
         predictionAlgorithm.predict(currentCurrencyStatistic, predictionCurrencyStatistic, LENGTH_PERIOD);
+        printResult();
+        printPrediction.printPrediction(predictionCurrencyStatistic, CURRENCY_TYPE, LENGTH_PERIOD);
         // TODO: реализовать печать результатов через class печати.
         // TODO: добавить везде где можно/нужно джава доки.
         // TODO: весь вывод должен быть на одном языке во всех файлах.
-        printResult();
     }
 
     private void printResult() {

@@ -1,10 +1,10 @@
 package ru.liga.predictionService.predictionPrinter;
 
-import ru.liga.predictionService.predictionAlg.PredictionAlgorithm;
+import ru.liga.predictionService.CurrencyStatistic;
 
-public class PrintPredictionAverage implements PrintPrediction{
+public class PrintPredictionAverage implements PrintPrediction {
     @Override
-    public void printPrediction(PredictionAlgorithm predictionAlgorithm) {
+    public void printPrediction(CurrencyStatistic predictedCurrencyStatistic, String currencyType, int lengthPeriod) {
 
     }
 }

@@ -93,7 +93,11 @@ public class App {
                 .executeApplication();
     }
 
-    private static boolean isNotInRange(final int value, final int left, final int right) {
+    private static boolean isNotInRange(
+            final int value,
+            final int left,
+            final int right)
+    {
         if (value < left || value > right) {
             System.out.println(EXIT_MSG);
             return true;
