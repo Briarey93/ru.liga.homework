@@ -18,16 +18,14 @@ public class App {
     private static final String TYPE_LIRA = "Turkish_LIRA";
 
     private static final String[] SOURCE_TYPE = {
-            "",
             TYPE_DOLLAR,
             TYPE_EURO,
             TYPE_LIRA};
 
     private static final String[] ALGORITHM_TYPE = {
-            "",
             "Average"};
 
-    private static final int[] LENGTH_PERIOD = {0, 1, 7, 30};
+    private static final int[] LENGTH_PERIOD = {1, 7, 30};
 
     private static final String PRINT_CHOICE_SOURCE_TYPE_MSG =
             "Выберите интересующую вас валюту:\n" +
@@ -63,27 +61,25 @@ public class App {
         int typeAlgorithm;
         int lengthPeriod = 0;
 
-
         System.out.println(PRINT_CHOICE_SOURCE_TYPE_MSG);
-        typeCurrency = tryReadNextInteger(in);
-        if (isNotInRange(typeCurrency, 1, SOURCE_TYPE.length - 1)) {
+        typeCurrency = tryReadNextInteger(in) - 1;
+        if (isNotInRange(typeCurrency, 0, SOURCE_TYPE.length)) {
             return;
         }
 
         System.out.println(PRINT_CHOICE_ALGORITHM_TYPE_MSG);
-        typeAlgorithm = tryReadNextInteger(in);
-        if (isNotInRange(typeAlgorithm, 1, ALGORITHM_TYPE.length - 1)) {
+        typeAlgorithm = tryReadNextInteger(in) - 1;
+        if (isNotInRange(typeAlgorithm, 0, ALGORITHM_TYPE.length)) {
             return;
         }
 
-        if (typeAlgorithm == 1) {
+        if (typeAlgorithm == 0) {
             System.out.println(PRINT_CHOICE_LENGTH_PERIOD_MSG);
-            lengthPeriod = tryReadNextInteger(in);
-            if (isNotInRange(typeAlgorithm, 1, LENGTH_PERIOD.length - 1)) {
+            lengthPeriod = tryReadNextInteger(in) - 1;
+            if (isNotInRange(lengthPeriod, 0, LENGTH_PERIOD.length)) {
                 return;
             }
         }
-
 
         new PredictionExecutor(
                 SOURCE_PATH + SOURCE_TYPE[typeCurrency] + FORMAT,
@@ -96,8 +92,7 @@ public class App {
     private static boolean isNotInRange(
             final int value,
             final int left,
-            final int right)
-    {
+            final int right) {
         if (value < left || value > right) {
             System.out.println(EXIT_MSG);
             return true;
@@ -109,7 +104,7 @@ public class App {
         try {
             return in.nextInt();
         } catch (Exception e) {
-            return 0;
+            return -1;
         }
     }
 }
