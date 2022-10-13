@@ -9,10 +9,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class PredictionExecutor {
-    private SourceReader sourceReader;
+
     private final String CURRENCY_TYPE;
     private final String ALGORITHM_TYPE;
     private final int LENGTH_PERIOD;
+
+    private SourceReader sourceReader;
 
     private CurrencyStatistic currentCurrencyStatistic;
     private CurrencyStatistic predictionCurrencyStatistic;
@@ -41,9 +43,11 @@ public class PredictionExecutor {
         printPrediction = predictionAlgorithmFactory.createPrintPrediction();
     }
 
+
     private PredictionAlgorithmFactory createPredictionAlgorithm_AndPrinterPrediction_BasedOnAlgorithmType() {
-        if (ALGORITHM_TYPE.equalsIgnoreCase("average"))
+        if (ALGORITHM_TYPE.equalsIgnoreCase("average")) {
             return new PredictionAlgorithmFactoryAverage();
+        }
         throw new RuntimeException(ALGORITHM_TYPE + " is unknown algorithm type.");
     }
 
@@ -67,6 +71,7 @@ public class PredictionExecutor {
         // TODO: реализовать печать результатов через class печати.
         // TODO: добавить везде где можно/нужно джава доки.
         // TODO: весь вывод должен быть на одном языке во всех файлах.
+        // TODO: @Slf4j добавить классам.
     }
 
     private void printResult() {
