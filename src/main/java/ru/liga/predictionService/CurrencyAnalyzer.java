@@ -28,7 +28,7 @@ public class CurrencyAnalyzer {
 
         currencyStatistic.getDates().add(LocalDate.parse(num[1], formatter));
 
-        num[0] = num[0].replaceAll(" ","");
+        num[0] = num[0].replaceAll(" ", "");
         num[2] = num[2].replaceFirst(",", ".");
 
         currencyStatistic.getCurrencyStatistics()

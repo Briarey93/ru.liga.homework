@@ -1,12 +1,13 @@
 package ru.liga.predictionService;
 
+import ru.liga.predictionService.predictionAlg.PredictionAlgorithmFactoryInitializer;
 import ru.liga.predictionService.predictionAlg.PredictionAlgorithm;
 import ru.liga.predictionService.predictionAlg.PredictionAlgorithmFactory;
-import ru.liga.predictionService.predictionAlg.PredictionAlgorithmFactoryAverage;
 import ru.liga.predictionService.predictionPrinter.PrintPrediction;
 
-public class PredictionExecutor {
+public class PredictionService {
 
+    private final String SOURCE;
     private final String CURRENCY_TYPE;
     private final String ALGORITHM_TYPE;
     private final int LENGTH_PERIOD;
@@ -20,10 +21,11 @@ public class PredictionExecutor {
     private PrintPrediction printPrediction;
 
 
-    public PredictionExecutor(final String source,
-                              final String currencyType,
-                              final String algorithmType,
-                              final int lengthPeriod) {
+    public PredictionService(final String source,
+                             final String currencyType,
+                             final String algorithmType,
+                             final int lengthPeriod) {
+        SOURCE = source;
         CURRENCY_TYPE = currencyType;
         ALGORITHM_TYPE = algorithmType;
         LENGTH_PERIOD = lengthPeriod;
@@ -32,20 +34,12 @@ public class PredictionExecutor {
         predictionCurrencyStatistic = new CurrencyStatistic();
 
         sourceReader = new SourceReader(currentCurrencyStatistic);
-        sourceReader.setup(source);
 
         PredictionAlgorithmFactory predictionAlgorithmFactory =
-                createPredictionAlgorithm_AndPrinterPrediction_BasedOnAlgorithmType();
+                PredictionAlgorithmFactoryInitializer
+                        .createPredictionAlgorithm_AndPrinterPrediction_BasedOnAlgorithmType(ALGORITHM_TYPE);
         predictionAlgorithm = predictionAlgorithmFactory.createPredictionAlgorithm();
         printPrediction = predictionAlgorithmFactory.createPrintPrediction();
-    }
-
-
-    private PredictionAlgorithmFactory createPredictionAlgorithm_AndPrinterPrediction_BasedOnAlgorithmType() {
-        if (ALGORITHM_TYPE.equalsIgnoreCase("average")) {
-            return new PredictionAlgorithmFactoryAverage();
-        }
-        throw new RuntimeException(ALGORITHM_TYPE + " is unknown algorithm type.");
     }
 
     /**
@@ -53,16 +47,20 @@ public class PredictionExecutor {
      */
     public void executeApplication() {
         try {
+            sourceReader.setup(SOURCE);
             sourceReader.readSource();
         } catch (Exception e) {
             System.out.println("Ошибка чтения файла.");
+            System.out.println(e.getMessage());
             return;
         }
 
-        if (currentCurrencyStatistic.getCurrencyStatistics().isEmpty()) {
+        try {
+            predictionAlgorithm.predict(currentCurrencyStatistic, predictionCurrencyStatistic, LENGTH_PERIOD);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return;
         }
-        predictionAlgorithm.predict(currentCurrencyStatistic, predictionCurrencyStatistic, LENGTH_PERIOD);
         printPrediction.print(predictionCurrencyStatistic, CURRENCY_TYPE, LENGTH_PERIOD);
         // TODO: добавить везде где можно/нужно джава доки.
         // TODO: весь вывод должен быть на одном языке во всех файлах.

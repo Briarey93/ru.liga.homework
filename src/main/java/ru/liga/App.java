@@ -1,6 +1,6 @@
 package ru.liga;
 
-import ru.liga.predictionService.PredictionExecutor;
+import ru.liga.predictionService.PredictionService;
 
 import java.util.Scanner;
 
@@ -81,7 +81,7 @@ public class App {
             }
         }
 
-        new PredictionExecutor(
+        new PredictionService(
                 SOURCE_PATH + SOURCE_TYPE[typeCurrency] + FORMAT,
                 SOURCE_TYPE[typeCurrency],
                 ALGORITHM_TYPE[typeAlgorithm],
