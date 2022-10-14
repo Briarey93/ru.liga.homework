@@ -5,9 +5,6 @@ import ru.liga.predictionService.predictionAlg.PredictionAlgorithmFactory;
 import ru.liga.predictionService.predictionAlg.PredictionAlgorithmFactoryAverage;
 import ru.liga.predictionService.predictionPrinter.PrintPrediction;
 
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-
 public class PredictionExecutor {
 
     private final String CURRENCY_TYPE;
@@ -66,35 +63,9 @@ public class PredictionExecutor {
             return;
         }
         predictionAlgorithm.predict(currentCurrencyStatistic, predictionCurrencyStatistic, LENGTH_PERIOD);
-        printResult();
-        printPrediction.printPrediction(predictionCurrencyStatistic, CURRENCY_TYPE, LENGTH_PERIOD);
-        // TODO: реализовать печать результатов через class печати.
+        printPrediction.print(predictionCurrencyStatistic, CURRENCY_TYPE, LENGTH_PERIOD);
         // TODO: добавить везде где можно/нужно джава доки.
         // TODO: весь вывод должен быть на одном языке во всех файлах.
         // TODO: @Slf4j добавить классам.
-    }
-
-    private void printResult() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE dd.MM.yyyy - ", Locale.ENGLISH);
-
-        switch (LENGTH_PERIOD) {
-            case (1):
-                System.out.print("\"rate " + CURRENCY_TYPE + " tomorrow\" ");
-                break;
-
-            case (7):
-                System.out.println("\"rate " + CURRENCY_TYPE + " week\"");
-                break;
-
-            case (30):
-                System.out.println("\"rate " + CURRENCY_TYPE + " month\"");
-                break;
-        }
-
-
-        for (int i = 0; i < LENGTH_PERIOD; i++) {
-            System.out.print("\t" + predictionCurrencyStatistic.getDates().get(i).format(formatter));
-            System.out.printf("%.2f\n", predictionCurrencyStatistic.getCurrencyStatistics().get(i));
-        }
     }
 }
