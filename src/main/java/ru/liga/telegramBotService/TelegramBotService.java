@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.liga.telegramBotService.commands.PredictionCommand;
 import ru.liga.telegramBotService.commands.SettingsCommand;
 import ru.liga.telegramBotService.commands.StartCommand;
 import ru.liga.telegramBotService.commands.HelpCommand;
@@ -38,6 +39,9 @@ public class TelegramBotService extends TelegramLongPollingCommandBot {
 
         register(new SettingsCommand("settings", "Мои настройки"));
         log.debug("Команда settings создана");
+
+        register(new PredictionCommand("predict", "Предсказание"));
+        log.debug("Команда predict создана");
 
         userSettings = new HashMap<>();
         log.info("TEST: Bot Started");

@@ -45,25 +45,26 @@ public class PredictionService {
     /**
      * Метод логики и последовательности действий приложения.
      */
-    public void executeApplication() {
+    public CurrencyStatistic executeApplication() {
         try {
             sourceReader.setup(SOURCE);
             sourceReader.readSource();
         } catch (Exception e) {
             System.out.println("Ошибка чтения файла.");
             System.out.println(e.getMessage());
-            return;
+            return null;
         }
 
         try {
             predictionAlgorithm.predict(currentCurrencyStatistic, predictionCurrencyStatistic, LENGTH_PERIOD);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return;
+            return null;
         }
         printPrediction.print(predictionCurrencyStatistic, CURRENCY_TYPE, LENGTH_PERIOD);
         // TODO: добавить везде где можно/нужно джава доки.
         // TODO: весь вывод должен быть на одном языке во всех файлах.
         // TODO: @Slf4j добавить классам.
+        return predictionCurrencyStatistic;
     }
 }
