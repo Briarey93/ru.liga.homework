@@ -22,7 +22,7 @@ public class HelpCommand extends ServiceCommand {
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName,
                 "Привет, я бот, который поможет вам рассчитать курс валюты на будующие даты," +
                         " используя специальные алгоритмы предсказания.\n" +
-                        "❗*Список команд*\n"+
+                        "❗*Список команд*\n" +
                         "/start - включение бота\n" +
                         "/settings - показывает текущие настройки предсказания\n" +
                         "/predict - выводит результат предсказания\n" +
@@ -33,15 +33,13 @@ public class HelpCommand extends ServiceCommand {
                         "По умолчанию я сформирую предсказание для валюты доллар США на период недели," +
                         "рассчитанное по алгоритму Среднее арифметическое значение " +
                         "на основании 7 последних курсов.\n" +
-                        "Если вы хотите изменить эти параметры, используйте параметры:\n" +
+                        "Если вы хотите изменить эти параметры, используйте команды:\n" +
                         "-rate source, где source это доступный источник валют\n" +
                         "-rate algorithm, где algorithm это доступный аолгоритм предсказаний\n" +
                         "-rate period, где period это доступный период предсказаний.\n" +
                         "\uD83D\uDC49Пример использования:\n" +
-                        "-rate dollarUSA " +
-                        "-algorithm average " +
-                        "-period day\n\n" +
-                        "Желаю удачи\uD83D\uDE42" );
+                        "-rate dollarUSA -algorithm average -period day\n\n" +
+                        "Желаю удачи\uD83D\uDE42");
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
                 this.getCommandIdentifier()));
