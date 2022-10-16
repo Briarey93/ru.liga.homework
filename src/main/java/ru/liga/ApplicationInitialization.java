@@ -5,10 +5,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.liga.telegramBotService.TelegramBotService;
 
-import ru.liga.consoleAppService.ConsoleAppService;
-
 import java.util.Map;
-
 public class ApplicationInitialization {
 
     private static final Map<String, String> getenv = System.getenv();

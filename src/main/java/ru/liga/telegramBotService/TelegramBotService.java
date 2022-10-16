@@ -3,6 +3,8 @@ package ru.liga.telegramBotService;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.liga.telegramBotService.commands.StartCommand;
+import ru.liga.telegramBotService.commands.HelpCommand;
 
 @Slf4j
 public class TelegramBotService extends TelegramLongPollingCommandBot {
@@ -17,8 +19,13 @@ public class TelegramBotService extends TelegramLongPollingCommandBot {
 
         register(new StartCommand("start", "Старт"));
 
+        register(new HelpCommand("help", "Помощь"));
 
         log.info("TEST: Bot Started");
+        log.debug("TEST: Bot Started");
+        log.debug("TEST: Bot Started");
+        log.debug("TEST: Bot Started");
+
     }
 
     @Override
