@@ -1,4 +1,4 @@
-package ru.liga;
+package ru.liga.consoleAppService;
 
 import ru.liga.predictionService.PredictionService;
 
@@ -8,7 +8,7 @@ import java.util.Scanner;
 /**
  * Course stat.
  */
-public class App {
+public class ConsoleAppService {
 
     private static final String SOURCE_PATH = "src/main/resources/RC_F01_01_2002_T01_10_2022_";
     private static final String FORMAT = ".csv";
@@ -49,13 +49,7 @@ public class App {
     private static final String EXIT_MSG = "Exit! goodBye.";
 
 
-    /**
-     * Точка входа в программу.
-     * Запрашиваем у пользователя входные параметры.
-     *
-     * @param args - входные параметры.
-     */
-    public static void main(String[] args) {
+    public static void consoleAppStart() {
         Scanner in = new Scanner(System.in);
         int typeCurrency;
         int typeAlgorithm;
