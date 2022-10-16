@@ -14,6 +14,10 @@ public class TelegramBotService extends TelegramLongPollingCommandBot {
         super();
         BOT_NAME = botName;
         BOT_TOKEN = botToken;
+
+        register(new StartCommand("start", "Старт"));
+
+
         log.info("TEST: Bot Started");
     }
 
