@@ -1,10 +1,12 @@
 package ru.liga.predictionService;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.liga.predictionService.predictionAlg.PredictionAlgorithmFactoryInitializer;
 import ru.liga.predictionService.predictionAlg.PredictionAlgorithm;
 import ru.liga.predictionService.predictionAlg.PredictionAlgorithmFactory;
 import ru.liga.predictionService.predictionPrinter.PrintPrediction;
 
+@Slf4j
 public class PredictionService {
 
     private final String SOURCE;
@@ -40,12 +42,15 @@ public class PredictionService {
                         .createPredictionAlgorithm_AndPrinterPrediction_BasedOnAlgorithmType(ALGORITHM_TYPE);
         predictionAlgorithm = predictionAlgorithmFactory.createPredictionAlgorithm();
         printPrediction = predictionAlgorithmFactory.createPrintPrediction();
+        log.debug("PredictionService инициализирован");
     }
 
     /**
      * Метод логики и последовательности действий приложения.
      */
     public CurrencyStatistic executeApplication() {
+        log.debug("Начато выполнение программы рассчёта предсказания валют");
+
         try {
             sourceReader.setup(SOURCE);
             sourceReader.readSource();
@@ -65,6 +70,8 @@ public class PredictionService {
         // TODO: добавить везде где можно/нужно джава доки.
         // TODO: весь вывод должен быть на одном языке во всех файлах.
         // TODO: @Slf4j добавить классам.
+
+        log.debug("Завершено выполнение программы рассчёта предсказания валют");
         return predictionCurrencyStatistic;
     }
 }
