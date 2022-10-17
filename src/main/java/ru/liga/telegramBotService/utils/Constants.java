@@ -42,11 +42,21 @@ public class Constants {
 
 
     @Getter
-    private static final List<String> RATE = Arrays.asList("USA", "EURO", "LIRA");
+    private static final List<String> RATE =
+            Arrays.asList("USA",
+                    "EURO",
+                    "LIRA");
 
     @Getter
-    private static final List<String> ALGORITHM = Arrays.asList("AVERAGE");
+    private static final List<String> ALGORITHM =
+            Arrays.asList("AVERAGE");
+    @Getter
+    private static final List<String> ALGORITHM_DESCRIPTION =
+            Arrays.asList("среднее арифметическое на основании 7 последних курсов валют");
 
     @Getter
-    private static final List<String> PERIOD = Arrays.asList("DAY", "WEEK", "MONTH");
+    private static final List<String> PERIOD =
+            Arrays.asList("DAY",
+                    "WEEK",
+                    "MONTH");
 }

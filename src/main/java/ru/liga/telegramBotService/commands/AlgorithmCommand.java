@@ -21,10 +21,15 @@ public class AlgorithmCommand extends ServiceCommand {
         log.debug(String.format("Пользователь %s. Начато выполнение команды %s", userName,
                 this.getCommandIdentifier()));
 
+        StringBuilder sendMsg = new StringBuilder("Доступные алгоритмы:\n");
+        for (int i = 0; i < Constants.getALGORITHM().size(); i++) {
+            sendMsg.append(String.format("  - %s - %s\n",
+                    Constants.getALGORITHM().get(i),
+                    Constants.getALGORITHM_DESCRIPTION().get(i)));
+        }
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName,
-                "Доступные алгоритмы:\n" +
-                        "  - AVERAGE - среднее арифметическое на основании 7 последних курсов валют.\n\n" +
-                        Constants.getTUTORIAL_ALGORITHM());
+                sendMsg.append(String.format("\n%s",
+                        Constants.getTUTORIAL_ALGORITHM())).toString());
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
                 this.getCommandIdentifier()));
