@@ -4,10 +4,10 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.liga.telegramBotService.commands.HelpCommand;
 import ru.liga.telegramBotService.commands.PredictionCommand;
 import ru.liga.telegramBotService.commands.SettingsCommand;
 import ru.liga.telegramBotService.commands.StartCommand;
-import ru.liga.telegramBotService.commands.HelpCommand;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class TelegramBotService extends TelegramLongPollingCommandBot {
     private final String BOT_NAME;
     private final String BOT_TOKEN;
 
-    private static final Settings defaultSettings = new Settings("USA", "average","week");
+    private static final Settings defaultSettings = new Settings("USA", "average", "week");
 
     /**
      * Настройки файла для разных пользователей. Ключ - уникальный id чата
@@ -30,6 +30,7 @@ public class TelegramBotService extends TelegramLongPollingCommandBot {
         super();
         BOT_NAME = botName;
         BOT_TOKEN = botToken;
+        log.debug("Имя бота и токен получены");
 
         register(new StartCommand("start", "Старт"));
         log.debug("Команда start создана");
@@ -44,7 +45,7 @@ public class TelegramBotService extends TelegramLongPollingCommandBot {
         log.debug("Команда predict создана");
 
         userSettings = new HashMap<>();
-        log.info("TEST: Bot Started");
+        log.info("Бот создан.");
     }
 
     @Override

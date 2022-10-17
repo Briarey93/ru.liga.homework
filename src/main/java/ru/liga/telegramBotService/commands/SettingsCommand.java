@@ -29,12 +29,12 @@ public class SettingsCommand extends ServiceCommand {
                                 "- валюта - %s\n" +
                                 "- алгоритм - %s\n" +
                                 "- период - %s\n\n" +
-                        "Если вы хотите изменить эти параметры, используйте команды:\n" +
-                        "-rate source, где source это доступный источник валют\n" +
-                        "-rate algorithm, где algorithm это доступный аолгоритм предсказаний\n" +
-                        "-rate period, где period это доступный период предсказаний.\n" +
-                        "\uD83D\uDC49Пример использования:\n" +
-                        "-rate dollarUSA -algorithm average -period day",
+                                "Если вы хотите изменить эти параметры, используйте команды:\n" +
+                                "-rate source, где source это доступный источник валют\n" +
+                                "-rate algorithm, где algorithm это доступный аолгоритм предсказаний\n" +
+                                "-rate period, где period это доступный период предсказаний.\n" +
+                                "\uD83D\uDC49Пример использования:\n" +
+                                "-rate dollarUSA -algorithm average -period day",
                         settings.getAlgorithm(), settings.getPeriod(), settings.getSource()));
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,

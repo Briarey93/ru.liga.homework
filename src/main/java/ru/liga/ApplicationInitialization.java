@@ -6,6 +6,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.liga.telegramBotService.TelegramBotService;
 
 import java.util.Map;
+
 public class ApplicationInitialization {
 
     private static final Map<String, String> getenv = System.getenv();

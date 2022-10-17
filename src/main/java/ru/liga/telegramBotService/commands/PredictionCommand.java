@@ -60,7 +60,6 @@ public class PredictionCommand extends ServiceCommand {
                 .executeApplication();
 
 
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE dd.MM.yyyy - ", Locale.ENGLISH);
 
 

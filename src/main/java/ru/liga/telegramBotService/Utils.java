@@ -7,6 +7,7 @@ public class Utils {
 
     /**
      * Формирование имени пользователя
+     *
      * @param msg сообщение
      */
     public static String getUserName(Message msg) {
@@ -15,6 +16,7 @@ public class Utils {
 
     /**
      * Формирование имени пользователя. Если заполнен никнейм, используем его. Если нет - используем фамилию и имя
+     *
      * @param user пользователь
      */
     public static String getUserName(User user) {

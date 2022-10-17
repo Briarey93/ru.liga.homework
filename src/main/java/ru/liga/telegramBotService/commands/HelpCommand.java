@@ -19,6 +19,7 @@ public class HelpCommand extends ServiceCommand {
 
         log.debug(String.format("Пользователь %s. Начато выполнение команды %s", userName,
                 this.getCommandIdentifier()));
+
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName,
                 "Привет, я бот, который поможет вам рассчитать курс валюты на будующие даты," +
                         " используя специальные алгоритмы предсказания.\n" +
