@@ -1,5 +1,8 @@
 package ru.liga.telegramBotService.utils;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Constants {
     public static final String TUTORIAL =
             "Если вы хотите изменить эти параметры, используйте команды:\n" +
@@ -26,4 +29,9 @@ public class Constants {
                     "  -prd <period>, где period - доступный период\n\n" +
                     "\uD83D\uDC49Пример использования:\n" +
                     "  -prd DAY";
+
+
+    public static final List<String> RATE = Arrays.asList("USA", "EURO", "LIRA");
+    public static final List<String> ALGORITHM = Arrays.asList("AVERAGE");
+    public static final List<String> PERIOD = Arrays.asList("DAY", "WEEK", "MONTH");
 }

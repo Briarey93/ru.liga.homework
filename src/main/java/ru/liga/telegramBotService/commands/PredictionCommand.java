@@ -22,9 +22,9 @@ public class PredictionCommand extends ServiceCommand {
     private static final String FORMAT = ".csv";
 
     private final Map<String, Integer> PERIOD_VALUE = new HashMap<String, Integer>() {{
-        put("day", 1);
-        put("week", 7);
-        put("month", 30);
+        put("DAY", 1);
+        put("WEEK", 7);
+        put("MONTH", 30);
     }};
 
 

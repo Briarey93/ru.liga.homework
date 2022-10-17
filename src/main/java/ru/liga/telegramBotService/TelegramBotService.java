@@ -3,9 +3,13 @@ package ru.liga.telegramBotService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.liga.telegramBotService.commands.*;
 import ru.liga.telegramBotService.utils.Settings;
+import ru.liga.telegramBotService.utils.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +20,9 @@ public class TelegramBotService extends TelegramLongPollingCommandBot {
     private final String BOT_NAME;
     private final String BOT_TOKEN;
 
-    private static final Settings defaultSettings = new Settings("USA", "average", "week");
+    @Getter
+    private static final Settings defaultSettings = new Settings("USA", "AVERAGE", "WEEK");
+    private final NonCommand nonCommand;
 
     /**
      * Настройки файла для разных пользователей. Ключ - уникальный id чата
@@ -29,6 +35,9 @@ public class TelegramBotService extends TelegramLongPollingCommandBot {
         BOT_NAME = botName;
         BOT_TOKEN = botToken;
         log.debug("Имя бота и токен получены");
+
+        this.nonCommand = new NonCommand();
+        log.debug("Класс обработки сообщения, не являющегося командой, создан");
 
         register(new StartCommand("start", "Старт"));
         log.debug("Команда start создана");
@@ -76,6 +85,24 @@ public class TelegramBotService extends TelegramLongPollingCommandBot {
 
     @Override
     public void processNonCommandUpdate(Update update) {
+        Message msg = update.getMessage();
+        Long chatId = msg.getChatId();
+        String userName = Utils.getUserName(msg);
 
+        String answer = nonCommand.nonCommandExecute(chatId, userName, msg.getText());
+        setAnswer(chatId, userName, answer);
+    }
+
+    private void setAnswer(Long chatId, String userName, String text) {
+        SendMessage answer = new SendMessage();
+        answer.setText(text);
+        answer.setChatId(chatId.toString());
+        try {
+            execute(answer);
+        } catch (TelegramApiException e) {
+            log.error(String.format("Ошибка %s. Сообщение, не являющееся командой. Пользователь: %s", e.getMessage(),
+                    userName));
+            e.printStackTrace();
+        }
     }
 }
