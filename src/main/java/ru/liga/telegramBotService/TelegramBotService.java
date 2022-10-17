@@ -14,22 +14,38 @@ import ru.liga.telegramBotService.utils.Utils;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Бот.
+ */
 @Slf4j
 public class TelegramBotService extends TelegramLongPollingCommandBot {
 
     private final String BOT_NAME;
     private final String BOT_TOKEN;
 
-    @Getter
-    private static final Settings defaultSettings = new Settings("USA", "AVERAGE", "WEEK");
+    /**
+     * Обработчик сообщения, не являющегося командой.
+     */
     private final NonCommand nonCommand;
 
     /**
-     * Настройки файла для разных пользователей. Ключ - уникальный id чата
+     * Настройки по умолчанию.
+     */
+    @Getter
+    private static final Settings defaultSettings = new Settings("USA", "AVERAGE", "WEEK");
+
+    /**
+     * Настройки для разных пользователей. Ключ - уникальный id чата
      */
     @Getter
     private static Map<Long, Settings> userSettings;
 
+    /**
+     * Конструктор, инициализирующий бота.
+     *
+     * @param botName  имя бота.
+     * @param botToken токен бота.
+     */
     public TelegramBotService(String botName, String botToken) {
         super();
         BOT_NAME = botName;
@@ -64,16 +80,32 @@ public class TelegramBotService extends TelegramLongPollingCommandBot {
         log.info("Бот создан.");
     }
 
+    /**
+     * Получить имя бота.
+     *
+     * @return имя бота.
+     */
     @Override
     public String getBotUsername() {
         return BOT_NAME;
     }
 
+    /**
+     * Получить токен бота.
+     *
+     * @return токен бота.
+     */
     @Override
     public String getBotToken() {
         return BOT_TOKEN;
     }
 
+    /**
+     * Получить уникальные настройки пользователя.
+     *
+     * @param chatId id пользователя.
+     * @return настройки пользователя.
+     */
     public static Settings getUserSettings(Long chatId) {
         Map<Long, Settings> userSettings = TelegramBotService.getUserSettings();
         Settings settings = userSettings.get(chatId);
@@ -83,6 +115,9 @@ public class TelegramBotService extends TelegramLongPollingCommandBot {
         return settings;
     }
 
+    /**
+     * Ответ на запрос, не являющийся командой
+     */
     @Override
     public void processNonCommandUpdate(Update update) {
         Message msg = update.getMessage();
@@ -93,6 +128,13 @@ public class TelegramBotService extends TelegramLongPollingCommandBot {
         setAnswer(chatId, userName, answer);
     }
 
+    /**
+     * Установить ответ на пользовательское сообщение, не являющийся командой.
+     *
+     * @param chatId   id пользователя.
+     * @param userName имя пользователя.
+     * @param text     пользовательское сообщение.
+     */
     private void setAnswer(Long chatId, String userName, String text) {
         SendMessage answer = new SendMessage();
         answer.setText(text);
