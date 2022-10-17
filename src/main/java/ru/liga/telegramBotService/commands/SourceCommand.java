@@ -1,0 +1,36 @@
+package ru.liga.telegramBotService.commands;
+
+import lombok.extern.slf4j.Slf4j;
+import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.User;
+import org.telegram.telegrambots.meta.bots.AbsSender;
+import ru.liga.telegramBotService.utils.Utils;
+
+@Slf4j
+public class SourceCommand extends ServiceCommand {
+
+    public SourceCommand(String identifier, String description) {
+        super(identifier, description);
+    }
+
+    @Override
+    public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
+        String userName = Utils.getUserName(user);
+
+        log.debug(String.format("Пользователь %s. Начато выполнение команды %s", userName,
+                this.getCommandIdentifier()));
+
+        sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName,
+                "Доступные источники валют:\n" +
+                        "\t- USA - доллар США\n" +
+                        "\t- EURO - Евро\n" +
+                        "\t- LIRA - Турецкая лира\n\n" +
+                        "Если вы хотите изменить параметр источника валют, используйте каоманду:\n" +
+                        "\t-rate <source>, где source - источник валют.\n\n" +
+                        "\uD83D\uDC49Пример использования:\n" +
+                        "-rate USA");
+
+        log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
+                this.getCommandIdentifier()));
+    }
+}

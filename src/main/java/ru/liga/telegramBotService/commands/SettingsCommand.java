@@ -24,18 +24,19 @@ public class SettingsCommand extends ServiceCommand {
 
         Long chatId = chat.getId();
         Settings settings = TelegramBotService.getUserSettings(chatId);
+
         sendAnswer(absSender, chatId, this.getCommandIdentifier(), userName,
                 String.format("*Текущие настройки*\n" +
                                 "- валюта - %s\n" +
                                 "- алгоритм - %s\n" +
                                 "- период - %s\n\n" +
                                 "Если вы хотите изменить эти параметры, используйте команды:\n" +
-                                "-rate source, где source это доступный источник валют\n" +
-                                "-rate algorithm, где algorithm это доступный аолгоритм предсказаний\n" +
-                                "-rate period, где period это доступный период предсказаний.\n" +
+                                "\t-rate source, где source это доступный источник валют\n" +
+                                "\t-alg algorithm, где algorithm это доступный аолгоритм предсказаний\n" +
+                                "\t-prd period, где period это доступный период предсказаний.\n" +
                                 "\uD83D\uDC49Пример использования:\n" +
-                                "-rate dollarUSA -algorithm average -period day",
-                        settings.getAlgorithm(), settings.getPeriod(), settings.getSource()));
+                                "-rate USA -algorithm average -period day",
+                        settings.getSource(), settings.getAlgorithm(), settings.getPeriod()));
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
                 this.getCommandIdentifier()));
