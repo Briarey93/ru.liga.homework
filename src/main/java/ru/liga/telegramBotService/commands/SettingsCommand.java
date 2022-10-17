@@ -9,6 +9,9 @@ import ru.liga.telegramBotService.utils.Constants;
 import ru.liga.telegramBotService.utils.Settings;
 import ru.liga.telegramBotService.utils.Utils;
 
+/**
+ * Команда /settings.
+ */
 @Slf4j
 public class SettingsCommand extends ServiceCommand {
 
@@ -16,6 +19,11 @@ public class SettingsCommand extends ServiceCommand {
         super(identifier, description);
     }
 
+    /**
+     * Действие бота на команду /settings.
+     * Выводит текущие настройки пользователя.
+     * Так же выводит пример всех команд.
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         String userName = Utils.getUserName(user);

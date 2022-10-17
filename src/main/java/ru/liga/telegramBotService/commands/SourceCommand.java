@@ -7,6 +7,9 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.liga.telegramBotService.utils.Constants;
 import ru.liga.telegramBotService.utils.Utils;
 
+/**
+ * Команда /rate.
+ */
 @Slf4j
 public class SourceCommand extends ServiceCommand {
 
@@ -14,6 +17,11 @@ public class SourceCommand extends ServiceCommand {
         super(identifier, description);
     }
 
+    /**
+     * Действие бота на команду /source.
+     * Выводит список доступных алгорифмов и их краткое описание.
+     * Так же выводит пример команды -rate.
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         String userName = Utils.getUserName(user);

@@ -7,6 +7,9 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.liga.telegramBotService.utils.Constants;
 import ru.liga.telegramBotService.utils.Utils;
 
+/**
+ * Команда /period.
+ */
 @Slf4j
 public class PeriodCommand extends ServiceCommand {
 
@@ -14,6 +17,11 @@ public class PeriodCommand extends ServiceCommand {
         super(identifier, description);
     }
 
+    /**
+     * Действие бота на команду /period.
+     * Выводит список доступных периодов и их краткое описание.
+     * Так же выводит пример команды -prd.
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         String userName = Utils.getUserName(user);

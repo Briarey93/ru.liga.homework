@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Команда /period.
+ */
 @Slf4j
 public class PredictionCommand extends ServiceCommand {
 
@@ -32,6 +35,10 @@ public class PredictionCommand extends ServiceCommand {
         super(identifier, description);
     }
 
+    /**
+     * Действие бота на команду /predict.
+     * Запускает рассчёт валюты алгоритмом на период, определенные в настройках пользователя.
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         String userName = Utils.getUserName(user);
@@ -42,8 +49,8 @@ public class PredictionCommand extends ServiceCommand {
         Long chatId = chat.getId();
         Settings settings = TelegramBotService.getUserSettings(chatId);
 
-        StringBuilder combineMsg = new StringBuilder();
-        combineMsg.append(String.format("\"rate %s %s\"\n", settings.getSource(), settings.getPeriod()));
+        StringBuilder sendMsg = new StringBuilder();
+        sendMsg.append(String.format("\"rate %s %s\"\n", settings.getSource(), settings.getPeriod()));
 
         int lengthPeriod = PERIOD_VALUE.get(settings.getPeriod());
 
@@ -60,8 +67,8 @@ public class PredictionCommand extends ServiceCommand {
             return;
         }
 
-        parseCurrencyStatistic(combineMsg, lengthPeriod, predictedCurrencyStatistic);
-        sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, combineMsg.toString());
+        parseCurrencyStatistic(sendMsg, lengthPeriod, predictedCurrencyStatistic);
+        sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, sendMsg.toString());
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
                 this.getCommandIdentifier()));

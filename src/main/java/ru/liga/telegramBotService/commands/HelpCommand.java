@@ -7,6 +7,9 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.liga.telegramBotService.utils.Constants;
 import ru.liga.telegramBotService.utils.Utils;
 
+/**
+ * Команда /help
+ */
 @Slf4j
 public class HelpCommand extends ServiceCommand {
 
@@ -14,6 +17,11 @@ public class HelpCommand extends ServiceCommand {
         super(identifier, description);
     }
 
+    /**
+     * Действие бота на команду /help.
+     * Выводит список доступных команд и их краткое описание.
+     * Так же выводит пример всех команд.
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         String userName = Utils.getUserName(user);

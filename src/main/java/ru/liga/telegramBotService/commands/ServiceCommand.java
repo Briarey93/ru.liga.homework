@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 /**
- * Суперкласс для сервисных команд
+ * Суперкласс для сервисных команд.
  */
 abstract class ServiceCommand extends BotCommand {
     private Logger logger = LoggerFactory.getLogger(ServiceCommand.class);
@@ -18,7 +18,7 @@ abstract class ServiceCommand extends BotCommand {
     }
 
     /**
-     * Отправка ответа пользователю
+     * Отправка ответа пользователю.
      */
     void sendAnswer(AbsSender absSender, Long chatId, String commandName, String userName, String text) {
         SendMessage message = new SendMessage();

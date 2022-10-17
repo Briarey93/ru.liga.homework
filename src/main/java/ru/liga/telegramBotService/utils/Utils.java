@@ -3,6 +3,9 @@ package ru.liga.telegramBotService.utils;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.User;
 
+/**
+ * Вспомогательный класс.
+ */
 public class Utils {
 
     /**

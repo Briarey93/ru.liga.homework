@@ -6,12 +6,19 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.liga.telegramBotService.utils.Utils;
 
+/**
+ * Команда /start.
+ */
 @Slf4j
 public class StartCommand extends ServiceCommand {
     public StartCommand(String identifier, String description) {
         super(identifier, description);
     }
 
+    /**
+     * Действие бота на команду /start.
+     * Выводит приветственное сообщение и предлагает восьпользоваться помощью команды /help.
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         String userName = Utils.getUserName(user);
