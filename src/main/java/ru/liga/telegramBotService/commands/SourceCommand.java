@@ -23,9 +23,9 @@ public class SourceCommand extends ServiceCommand {
 
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName,
                 "Доступные источники валют:\n" +
-                        "\t- USA - доллар США\n" +
-                        "\t- EURO - Евро\n" +
-                        "\t- LIRA - Турецкая лира\n\n" +
+                        "  - USA - доллар США\n" +
+                        "  - EURO - Евро\n" +
+                        "  - LIRA - Турецкая лира\n\n" +
                         Constants.TUTORIAL_SOURCE);
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,

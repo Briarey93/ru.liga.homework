@@ -23,9 +23,9 @@ public class PeriodCommand extends ServiceCommand {
 
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName,
                 "Доступные периоды:\n" +
-                        "\t- DAY - 1 день\n" +
-                        "\t- WEEK - 7 дней\n" +
-                        "\t- MONTH - 30 дней\n\n" +
+                        "  - DAY - 1 день\n" +
+                        "  - WEEK - 7 дней\n" +
+                        "  - MONTH - 30 дней\n\n" +
                         Constants.TUTORIAL_PERIOD);
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,

@@ -66,6 +66,7 @@ public class PredictionService {
             System.out.println(e.getMessage());
             return null;
         }
+
         printPrediction.print(predictionCurrencyStatistic, CURRENCY_TYPE, LENGTH_PERIOD);
         // TODO: добавить везде где можно/нужно джава доки.
         // TODO: весь вывод должен быть на одном языке во всех файлах.

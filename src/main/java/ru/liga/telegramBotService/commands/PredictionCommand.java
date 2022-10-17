@@ -43,11 +43,7 @@ public class PredictionCommand extends ServiceCommand {
         Settings settings = TelegramBotService.getUserSettings(chatId);
 
         StringBuilder combineMsg = new StringBuilder();
-        combineMsg.append("\"rate ")
-                .append(settings.getSource())
-                .append(" ")
-                .append(settings.getPeriod())
-                .append("\"\n");
+        combineMsg.append(String.format("\"rate %s %s\"\n", settings.getSource(), settings.getPeriod()));
 
         int lengthPeriod = PERIOD_VALUE.get(settings.getPeriod());
 
@@ -58,22 +54,27 @@ public class PredictionCommand extends ServiceCommand {
                 lengthPeriod)
                 .executeApplication();
 
+        if (predictedCurrencyStatistic == null) {
+            log.error(String.format("Пользователь %s. Команда %s вышла с ошибкой.", userName,
+                    this.getCommandIdentifier()));
+            return;
+        }
+
         parseCurrencyStatistic(combineMsg, lengthPeriod, predictedCurrencyStatistic);
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, combineMsg.toString());
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
                 this.getCommandIdentifier()));
+
     }
 
     private void parseCurrencyStatistic(StringBuilder combineMsg, int lengthPeriod, CurrencyStatistic predictedCurrencyStatistic) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE dd.MM.yyyy", Locale.ENGLISH);
 
         for (int i = 0; i < lengthPeriod; i++) {
-            combineMsg.append("\t")
-                    .append(predictedCurrencyStatistic.getDates().get(i).format(formatter))
-                    .append(" - ")
-                    .append(predictedCurrencyStatistic.getCurrencyStatistics().get(i))
-                    .append("\n");
+            combineMsg.append(String.format("    %s - %s\n",
+                    predictedCurrencyStatistic.getDates().get(i).format(formatter),
+                    predictedCurrencyStatistic.getCurrencyStatistics().get(i)));
         }
     }
 }
