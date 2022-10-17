@@ -5,6 +5,9 @@ import lombok.Getter;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Агрегация констант для быстрого доступа.
+ */
 public class Constants {
 
     @Getter
