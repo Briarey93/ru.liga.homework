@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
+import ru.liga.telegramBotService.utils.Constants;
 import ru.liga.telegramBotService.utils.Utils;
 
 @Slf4j
@@ -25,10 +26,7 @@ public class PeriodCommand extends ServiceCommand {
                         "\t- DAY - 1 день\n" +
                         "\t- WEEK - 7 дней\n" +
                         "\t- MONTH - 30 дней\n\n" +
-                        "Если вы хотите изменить параметр периода рассчёта, используйте команду:\n" +
-                        "\t-prd <period>, где period доступный период\n\n" +
-                        "\uD83D\uDC49Пример использования:\n" +
-                        "\t-prd DAY");
+                        Constants.TUTORIAL_PERIOD);
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
                 this.getCommandIdentifier()));

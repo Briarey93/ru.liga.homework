@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
+import ru.liga.telegramBotService.utils.Constants;
 import ru.liga.telegramBotService.utils.Utils;
 
 @Slf4j
@@ -25,10 +26,7 @@ public class SourceCommand extends ServiceCommand {
                         "\t- USA - доллар США\n" +
                         "\t- EURO - Евро\n" +
                         "\t- LIRA - Турецкая лира\n\n" +
-                        "Если вы хотите изменить параметр источника валют, используйте каоманду:\n" +
-                        "\t-rate <source>, где source - источник валют.\n\n" +
-                        "\uD83D\uDC49Пример использования:\n" +
-                        "\t-rate USA");
+                        Constants.TUTORIAL_SOURCE);
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
                 this.getCommandIdentifier()));
