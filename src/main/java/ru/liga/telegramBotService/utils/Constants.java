@@ -42,10 +42,15 @@ public class Constants {
 
 
     @Getter
-    private static final List<String> RATE =
+    private static final List<String> SOURCE =
             Arrays.asList("USA",
                     "EURO",
                     "LIRA");
+    @Getter
+    private static final List<String> SOURCE_DESCRIPTION =
+            Arrays.asList("доллар США",
+                    "Евро",
+                    "Турецкая лира");
 
     @Getter
     private static final List<String> ALGORITHM =
@@ -59,4 +64,9 @@ public class Constants {
             Arrays.asList("DAY",
                     "WEEK",
                     "MONTH");
+    @Getter
+    private static final List<String> PERIOD_DESCRIPTION =
+            Arrays.asList("1 день",
+                    "7 дней",
+                    "30 дней");
 }

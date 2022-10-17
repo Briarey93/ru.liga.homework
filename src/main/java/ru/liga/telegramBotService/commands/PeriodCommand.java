@@ -21,12 +21,15 @@ public class PeriodCommand extends ServiceCommand {
         log.debug(String.format("Пользователь %s. Начато выполнение команды %s", userName,
                 this.getCommandIdentifier()));
 
+        StringBuilder sendMsg = new StringBuilder("Доступные периоды:\n");
+        for (int i = 0; i < Constants.getPERIOD().size(); i++) {
+            sendMsg.append(String.format("  - %s - %s\n",
+                    Constants.getPERIOD().get(i),
+                    Constants.getPERIOD_DESCRIPTION().get(i)));
+        }
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName,
-                "Доступные периоды:\n" +
-                        "  - DAY - 1 день\n" +
-                        "  - WEEK - 7 дней\n" +
-                        "  - MONTH - 30 дней\n\n" +
-                        Constants.getPERIOD());
+                sendMsg.append(String.format("\n%s",
+                        Constants.getTUTORIAL_PERIOD())).toString());
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
                 this.getCommandIdentifier()));

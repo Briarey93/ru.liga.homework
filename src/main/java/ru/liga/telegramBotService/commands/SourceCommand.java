@@ -21,12 +21,15 @@ public class SourceCommand extends ServiceCommand {
         log.debug(String.format("Пользователь %s. Начато выполнение команды %s", userName,
                 this.getCommandIdentifier()));
 
+        StringBuilder sendMsg = new StringBuilder("Доступные источники валют:\n");
+        for (int i = 0; i < Constants.getSOURCE().size(); i++) {
+            sendMsg.append(String.format("  - %s - %s\n",
+                    Constants.getSOURCE().get(i),
+                    Constants.getSOURCE_DESCRIPTION().get(i)));
+        }
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName,
-                "Доступные источники валют:\n" +
-                        "  - USA - доллар США\n" +
-                        "  - EURO - Евро\n" +
-                        "  - LIRA - Турецкая лира\n\n" +
-                        Constants.getTUTORIAL_SOURCE());
+                sendMsg.append(String.format("\n%s",
+                        Constants.getTUTORIAL_SOURCE())).toString());
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
                 this.getCommandIdentifier()));

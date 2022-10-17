@@ -108,7 +108,7 @@ public class NonCommand {
             }
         } else {
             result = parametersList.get(parametersList.indexOf("-rate") + 1).toUpperCase(Locale.ROOT);
-            if (!Constants.getRATE().contains(result)) {
+            if (!Constants.getSOURCE().contains(result)) {
                 throw new IllegalArgumentRateException("Недопустимые параметры команды \"-rate\"\n" +
                         "Рекомендую ознакомиться с содержанием команды /source");
             }
