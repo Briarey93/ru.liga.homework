@@ -26,7 +26,7 @@ public class SourceCommand extends ServiceCommand {
                         "  - USA - доллар США\n" +
                         "  - EURO - Евро\n" +
                         "  - LIRA - Турецкая лира\n\n" +
-                        Constants.TUTORIAL_SOURCE);
+                        Constants.getTUTORIAL_SOURCE());
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
                 this.getCommandIdentifier()));

@@ -26,7 +26,7 @@ public class PeriodCommand extends ServiceCommand {
                         "  - DAY - 1 день\n" +
                         "  - WEEK - 7 дней\n" +
                         "  - MONTH - 30 дней\n\n" +
-                        Constants.TUTORIAL_PERIOD);
+                        Constants.getPERIOD());
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
                 this.getCommandIdentifier()));

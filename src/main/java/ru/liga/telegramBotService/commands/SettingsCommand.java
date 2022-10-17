@@ -4,9 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
+import ru.liga.telegramBotService.TelegramBotService;
 import ru.liga.telegramBotService.utils.Constants;
 import ru.liga.telegramBotService.utils.Settings;
-import ru.liga.telegramBotService.TelegramBotService;
 import ru.liga.telegramBotService.utils.Utils;
 
 @Slf4j
@@ -31,7 +31,7 @@ public class SettingsCommand extends ServiceCommand {
                                 "- валюта - %s\n" +
                                 "- алгоритм - %s\n" +
                                 "- период - %s\n\n" +
-                                Constants.TUTORIAL,
+                                Constants.getTUTORIAL(),
                         settings.getSource(), settings.getAlgorithm(), settings.getPeriod()));
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,

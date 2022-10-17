@@ -24,7 +24,7 @@ public class AlgorithmCommand extends ServiceCommand {
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName,
                 "Доступные алгоритмы:\n" +
                         "  - AVERAGE - среднее арифметическое на основании 7 последних курсов валют.\n\n" +
-                        Constants.TUTORIAL_ALGORITHM);
+                        Constants.getTUTORIAL_ALGORITHM());
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
                 this.getCommandIdentifier()));

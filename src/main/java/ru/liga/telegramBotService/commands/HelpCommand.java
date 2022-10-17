@@ -35,7 +35,7 @@ public class HelpCommand extends ServiceCommand {
                         "По умолчанию я сформирую предсказание для валюты доллар США на период недели," +
                         "рассчитанное по алгоритму Среднее арифметическое значение " +
                         "на основании 7 последних курсов.\n" +
-                        Constants.TUTORIAL +
+                        Constants.getTUTORIAL() +
                         "\n\nЖелаю удачи\uD83D\uDE42");
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,

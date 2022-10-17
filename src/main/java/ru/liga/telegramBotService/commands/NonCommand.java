@@ -60,8 +60,8 @@ public class NonCommand {
      *
      * @param chatId id чата.
      * @param text   пользовательское сообщение.
-     * @throws IllegalArgumentException пробрасывается, если сообщение пользователя не соответствует формату.
      * @return новые настройки пользователя.
+     * @throws IllegalArgumentException пробрасывается, если сообщение пользователя не соответствует формату.
      */
     private Settings createSettings(Long chatId, String text) {
         //отсекаем файлы, стикеры, гифки и прочий мусор
@@ -94,8 +94,8 @@ public class NonCommand {
      *
      * @param chatId         id чата.
      * @param parametersList список параметров, введенных пользователем.
-     * @throws IllegalArgumentRateException пробрасывается, если сообщение пользователя не соответствует формату.
      * @return источник валюты.
+     * @throws IllegalArgumentRateException пробрасывается, если сообщение пользователя не соответствует формату.
      */
     private String getRate(Long chatId, List<String> parametersList) {
         String result;
@@ -108,7 +108,7 @@ public class NonCommand {
             }
         } else {
             result = parametersList.get(parametersList.indexOf("-rate") + 1).toUpperCase(Locale.ROOT);
-            if (!Constants.RATE.contains(result)) {
+            if (!Constants.getRATE().contains(result)) {
                 throw new IllegalArgumentRateException("Недопустимые параметры команды \"-rate\"\n" +
                         "Рекомендую ознакомиться с содержанием команды /source");
             }
@@ -124,8 +124,8 @@ public class NonCommand {
      *
      * @param chatId         id чата.
      * @param parametersList список параметров, введенных пользователем.
-     * @throws IllegalArgumentAlgException пробрасывается, если сообщение пользователя не соответствует формату.
      * @return алгоритм предсказания.
+     * @throws IllegalArgumentAlgException пробрасывается, если сообщение пользователя не соответствует формату.
      */
     private String getAlgorithm(Long chatId, List<String> parametersList) {
         String result;
@@ -138,7 +138,7 @@ public class NonCommand {
             }
         } else {
             result = parametersList.get(parametersList.indexOf("-alg") + 1).toUpperCase(Locale.ROOT);
-            if (!Constants.ALGORITHM.contains(result)) {
+            if (!Constants.getALGORITHM().contains(result)) {
                 throw new IllegalArgumentAlgException("Недопустимые параметры команды \"-alg\"\n" +
                         "Рекомендую ознакомиться с содержанием команды /algorithm");
             }
@@ -154,8 +154,8 @@ public class NonCommand {
      *
      * @param chatId         id чата.
      * @param parametersList список параметров, введенных пользователем.
-     * @throws IllegalArgumentPrdException  пробрасывается, если сообщение пользователя не соответствует формату.
      * @return период предсказания.
+     * @throws IllegalArgumentPrdException пробрасывается, если сообщение пользователя не соответствует формату.
      */
     private String getPeriod(Long chatId, List<String> parametersList) {
         String result;
@@ -168,7 +168,7 @@ public class NonCommand {
             }
         } else {
             result = parametersList.get(parametersList.indexOf("-prd") + 1).toUpperCase(Locale.ROOT);
-            if (!Constants.PERIOD.contains(result)) {
+            if (!Constants.getPERIOD().contains(result)) {
                 throw new IllegalArgumentPrdException("Недопустимые параметры команды \"-prd\"\n" +
                         "Рекомендую ознакомиться с содержанием команды /period");
             }
