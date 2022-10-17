@@ -16,7 +16,7 @@ import java.util.List;
 public class PredictionAlgorithmAverage implements PredictionAlgorithm {
 
     private final static int AVERAGE = 7;
-    private final static int SCALE = 5;
+    private final static int SCALE = 2;
     private static final String CAN_T_CALCULATE_PREDICTION_COURSE_LIST_TOO_SMALL = "Can't calculate prediction. Course List too small.";
 
 

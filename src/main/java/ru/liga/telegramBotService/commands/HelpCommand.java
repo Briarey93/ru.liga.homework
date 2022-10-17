@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import ru.liga.telegramBotService.Utils;
+import ru.liga.telegramBotService.utils.Utils;
 
 @Slf4j
 public class HelpCommand extends ServiceCommand {

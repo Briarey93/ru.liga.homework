@@ -6,9 +6,9 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.liga.predictionService.CurrencyStatistic;
 import ru.liga.predictionService.PredictionService;
-import ru.liga.telegramBotService.Settings;
 import ru.liga.telegramBotService.TelegramBotService;
-import ru.liga.telegramBotService.Utils;
+import ru.liga.telegramBotService.utils.Settings;
+import ru.liga.telegramBotService.utils.Utils;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -45,12 +45,14 @@ public class PredictionCommand extends ServiceCommand {
         log.debug(String.format("Пользователь %s. Начато выполнение команды %s", userName,
                 this.getCommandIdentifier()));
 
-        int typeCurrency = 0;
-        int typeAlgorithm = 0;
-        int lengthPeriod = 0;
-
         Long chatId = chat.getId();
         Settings settings = TelegramBotService.getUserSettings(chatId);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE dd.MM.yyyy", Locale.ENGLISH);
+        StringBuilder combineMsg = new StringBuilder();
+
+        int typeCurrency = 0;
+        int typeAlgorithm = 0;
+        int lengthPeriod = 1;
 
         CurrencyStatistic predictedCurrencyStatistic = new PredictionService(
                 SOURCE_PATH + SOURCE_TYPE[typeCurrency] + FORMAT,
@@ -59,8 +61,14 @@ public class PredictionCommand extends ServiceCommand {
                 LENGTH_PERIOD[lengthPeriod])
                 .executeApplication();
 
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE dd.MM.yyyy - ", Locale.ENGLISH);
+        for (int i = 0; i < LENGTH_PERIOD[lengthPeriod]; i++) {
+            combineMsg.append("\t")
+                    .append(predictedCurrencyStatistic.getDates().get(i).format(formatter))
+                    .append(" - ")
+                    .append(predictedCurrencyStatistic.getCurrencyStatistics().get(i))
+                    .append("\n");
+        }
+        sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, combineMsg.toString());
 
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,

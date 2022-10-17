@@ -8,6 +8,7 @@ import ru.liga.telegramBotService.commands.HelpCommand;
 import ru.liga.telegramBotService.commands.PredictionCommand;
 import ru.liga.telegramBotService.commands.SettingsCommand;
 import ru.liga.telegramBotService.commands.StartCommand;
+import ru.liga.telegramBotService.utils.Settings;
 
 import java.util.HashMap;
 import java.util.Map;

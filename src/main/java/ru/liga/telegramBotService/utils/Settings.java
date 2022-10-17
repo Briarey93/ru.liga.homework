@@ -1,4 +1,4 @@
-package ru.liga.telegramBotService;
+package ru.liga.telegramBotService.utils;
 
 import lombok.Getter;
 
