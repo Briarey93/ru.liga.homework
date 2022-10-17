@@ -12,9 +12,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Обработка сообщения, не являющегося командой.
+ */
 @Slf4j
 public class NonCommand {
 
+    /**
+     * Обработка сообщения, не являющегося командой.
+     */
     public String nonCommandExecute(Long chatId, String userName, String text) {
         log.debug(String.format("Пользователь %s. Начата обработка сообщения \"%s\", не являющегося командой",
                 userName, text));
@@ -30,7 +36,7 @@ public class NonCommand {
 
             log.debug(String.format("Пользователь %s. Объект настроек из сообщения \"%s\" создан и сохранён",
                     userName, text));
-            answer = String.format("Настройки обновлены. Вы всегда можете их посмотреть с помощью /settings");
+            answer = "Настройки обновлены. Вы всегда можете их посмотреть с помощью /settings";
         } catch (IllegalArgumentException e) {
             log.debug(String.format("Пользователь %s. Не удалось создать объект настроек из сообщения \"%s\". " +
                     "%s", userName, text, e.getMessage()));
@@ -49,6 +55,14 @@ public class NonCommand {
         return answer;
     }
 
+    /**
+     * Создание настроек из полученного пользователем сообщения.
+     *
+     * @param chatId id чата.
+     * @param text   пользовательское сообщение.
+     * @throws IllegalArgumentException пробрасывается, если сообщение пользователя не соответствует формату.
+     * @return новые настройки пользователя.
+     */
     private Settings createSettings(Long chatId, String text) {
         //отсекаем файлы, стикеры, гифки и прочий мусор
         if (text == null) {
@@ -61,8 +75,8 @@ public class NonCommand {
 
         text = text.replaceAll("\n", " ")
                 .replaceAll(", ", " ")
-                .replaceAll("   ", " ")
-                .replaceAll("  ", " ");
+                .replaceAll(" {3}", " ")
+                .replaceAll(" {2}", " ");
 
         List<String> parametersList = Arrays.asList(text.split(" "));
         String rate = getRate(chatId, parametersList);
@@ -73,6 +87,16 @@ public class NonCommand {
         return new Settings(rate, algorithm, period);
     }
 
+    /**
+     * Получение источника валюты от пользовательского сообщения.
+     * Если команды "-rate" нет, то возвращает старое значение пользователя.
+     * Если пользовательского значения нет, то возвращает значение по умолчанию.
+     *
+     * @param chatId         id чата.
+     * @param parametersList список параметров, введенных пользователем.
+     * @throws IllegalArgumentRateException пробрасывается, если сообщение пользователя не соответствует формату.
+     * @return источник валюты.
+     */
     private String getRate(Long chatId, List<String> parametersList) {
         String result;
 
@@ -93,6 +117,16 @@ public class NonCommand {
         return result;
     }
 
+    /**
+     * Получение алгоритма предсказания от пользовательского сообщения.
+     * Если команды "-alg" нет, то возвращает старое значение пользователя.
+     * Если пользовательского значения нет, то возвращает значение по умолчанию.
+     *
+     * @param chatId         id чата.
+     * @param parametersList список параметров, введенных пользователем.
+     * @throws IllegalArgumentAlgException пробрасывается, если сообщение пользователя не соответствует формату.
+     * @return алгоритм предсказания.
+     */
     private String getAlgorithm(Long chatId, List<String> parametersList) {
         String result;
 
@@ -113,6 +147,16 @@ public class NonCommand {
         return result;
     }
 
+    /**
+     * Получение периода предсказания от пользовательского сообщения.
+     * Если команды "-prd" нет, то возвращает старое значение пользователя.
+     * Если пользовательского значения нет, то возвращает значение по умолчанию.
+     *
+     * @param chatId         id чата.
+     * @param parametersList список параметров, введенных пользователем.
+     * @throws IllegalArgumentPrdException  пробрасывается, если сообщение пользователя не соответствует формату.
+     * @return период предсказания.
+     */
     private String getPeriod(Long chatId, List<String> parametersList) {
         String result;
 
@@ -134,8 +178,8 @@ public class NonCommand {
     }
 
     /**
-     * Добавление настроек пользователя в мапу, чтобы потом их использовать для этого пользователя при генерации файла
-     * Если настройки совпадают с дефолтными, они не сохраняются, чтобы впустую не раздувать мапу
+     * Добавление настроек пользователя в мапу, чтобы потом их использовать для этого пользователя при генерации файла.
+     * Если настройки совпадают с дефолтными, они не сохраняются, чтобы впустую не раздувать мапу.
      *
      * @param chatId   id чата
      * @param settings настройки
