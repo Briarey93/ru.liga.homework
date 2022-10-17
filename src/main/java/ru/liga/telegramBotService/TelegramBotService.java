@@ -42,6 +42,9 @@ public class TelegramBotService extends TelegramLongPollingCommandBot {
         register(new SourceCommand("source", "Источник"));
         log.debug("Команда source создана");
 
+        register(new AlgorithmCommand("algorithm", "Алгоритм"));
+        log.debug("Команда algorithm создана");
+
         register(new PredictionCommand("predict", "Предсказание"));
         log.debug("Команда predict создана");
 

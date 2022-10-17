@@ -31,11 +31,11 @@ public class SettingsCommand extends ServiceCommand {
                                 "- алгоритм - %s\n" +
                                 "- период - %s\n\n" +
                                 "Если вы хотите изменить эти параметры, используйте команды:\n" +
-                                "\t-rate source, где source это доступный источник валют\n" +
-                                "\t-alg algorithm, где algorithm это доступный аолгоритм предсказаний\n" +
-                                "\t-prd period, где period это доступный период предсказаний.\n" +
+                                "\t-rate <source>, где source это доступный источник валют\n" +
+                                "\t-alg <algorithm>, где algorithm это доступный аолгоритм предсказаний\n" +
+                                "\t-prd <period>, где period это доступный период предсказаний.\n\n" +
                                 "\uD83D\uDC49Пример использования:\n" +
-                                "-rate USA -algorithm average -period day",
+                                "\t-rate USA -alg AVERAGE -prd DAY",
                         settings.getSource(), settings.getAlgorithm(), settings.getPeriod()));
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,

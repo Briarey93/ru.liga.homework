@@ -7,9 +7,9 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.liga.telegramBotService.utils.Utils;
 
 @Slf4j
-public class SourceCommand extends ServiceCommand {
+public class AlgorithmCommand extends ServiceCommand {
 
-    public SourceCommand(String identifier, String description) {
+    public AlgorithmCommand(String identifier, String description) {
         super(identifier, description);
     }
 
@@ -21,14 +21,12 @@ public class SourceCommand extends ServiceCommand {
                 this.getCommandIdentifier()));
 
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName,
-                "Доступные источники валют:\n" +
-                        "\t- USA - доллар США\n" +
-                        "\t- EURO - Евро\n" +
-                        "\t- LIRA - Турецкая лира\n\n" +
-                        "Если вы хотите изменить параметр источника валют, используйте каоманду:\n" +
-                        "\t-rate <source>, где source - источник валют.\n\n" +
+                "Доступные алгоритмы:\n" +
+                        "\t- AVERAGE - среднее арифметическое на основании 7 последних курсов валют.\n\n" +
+                        "Если вы хотите изменить параметр алгоритма рассчёта, используйте команду:\n" +
+                        "\t-alg <algorithm>, где algorithm  доступный алгоритм\n\n" +
                         "\uD83D\uDC49Пример использования:\n" +
-                        "\t-rate USA");
+                        "\t-alg AVERAGE");
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
                 this.getCommandIdentifier()));
