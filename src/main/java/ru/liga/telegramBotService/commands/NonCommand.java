@@ -36,7 +36,8 @@ public class NonCommand {
 
             log.debug(String.format("Пользователь %s. Объект настроек из сообщения \"%s\" создан и сохранён",
                     userName, text));
-            answer = "Настройки обновлены. Вы всегда можете их посмотреть с помощью /settings";
+            answer = "Настройки обновлены. Вы всегда можете их посмотреть с помощью /settings\n\n" +
+                    "Для вывода рассчётных значений воспользуйтесь командой /predict";
         } catch (IllegalArgumentException e) {
             log.debug(String.format("Пользователь %s. Не удалось создать объект настроек из сообщения \"%s\". " +
                     "%s", userName, text, e.getMessage()));
