@@ -1,8 +1,11 @@
 package ru.liga.predictionService.predictionAlg;
 
-import ru.liga.predictionService.predictionPrinter.PrintPrediction;
-
 public interface PredictionAlgorithmFactory {
-    PredictionAlgorithm createPredictionAlgorithm();
-    PrintPrediction createPrintPrediction();
+
+    static PredictionAlgorithm createPredictionAlgorithm_BasedOnAlgorithmType(String algorithmType) {
+        if (algorithmType.equalsIgnoreCase("average")) {
+            return new PredictionAlgorithmAverage();
+        }
+        throw new RuntimeException(algorithmType + " is unknown algorithm type.");
+    }
 }

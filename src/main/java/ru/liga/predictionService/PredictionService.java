@@ -1,10 +1,10 @@
 package ru.liga.predictionService;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.liga.predictionService.predictionAlg.PredictionAlgorithmFactoryInitializer;
 import ru.liga.predictionService.predictionAlg.PredictionAlgorithm;
 import ru.liga.predictionService.predictionAlg.PredictionAlgorithmFactory;
 import ru.liga.predictionService.predictionPrinter.PrintPrediction;
+import ru.liga.predictionService.predictionPrinter.PrintPredictionFactory;
 
 @Slf4j
 public class PredictionService {
@@ -37,11 +37,8 @@ public class PredictionService {
 
         sourceReader = new SourceReader(currentCurrencyStatistic);
 
-        PredictionAlgorithmFactory predictionAlgorithmFactory =
-                PredictionAlgorithmFactoryInitializer
-                        .createPredictionAlgorithm_AndPrinterPrediction_BasedOnAlgorithmType(ALGORITHM_TYPE);
-        predictionAlgorithm = predictionAlgorithmFactory.createPredictionAlgorithm();
-        printPrediction = predictionAlgorithmFactory.createPrintPrediction();
+        predictionAlgorithm = PredictionAlgorithmFactory.createPredictionAlgorithm_BasedOnAlgorithmType(ALGORITHM_TYPE);
+        printPrediction = PrintPredictionFactory.createPrinterPrediction_BasedOnAlgorithmType(ALGORITHM_TYPE);
         log.debug("PredictionService инициализирован");
     }
 
@@ -55,22 +52,18 @@ public class PredictionService {
             sourceReader.setup(SOURCE);
             sourceReader.readSource();
         } catch (Exception e) {
-            System.out.println("Ошибка чтения файла.");
-            System.out.println(e.getMessage());
+            log.error(String.format("Ошибка чтения файла. %s", e));
             return null;
         }
 
         try {
             predictionAlgorithm.predict(currentCurrencyStatistic, predictionCurrencyStatistic, LENGTH_PERIOD);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
             return null;
         }
 
         printPrediction.print(predictionCurrencyStatistic, CURRENCY_TYPE, LENGTH_PERIOD);
-        // TODO: добавить везде где можно/нужно джава доки.
-        // TODO: весь вывод должен быть на одном языке во всех файлах.
-        // TODO: @Slf4j добавить классам.
 
         log.debug("Завершено выполнение программы рассчёта предсказания валют");
         return predictionCurrencyStatistic;
