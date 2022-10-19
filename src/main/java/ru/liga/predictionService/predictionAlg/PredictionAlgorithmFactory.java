@@ -7,6 +7,8 @@ public interface PredictionAlgorithmFactory {
             return new PredictionAlgorithmAverage();
         } else if (algorithmType.equalsIgnoreCase("lastYear")) {
             return new PredictionAlgorithmLastYear();
+        } else if (algorithmType.equalsIgnoreCase("mystic")) {
+            return new PredictionAlgorithmMystic();
         }
         throw new RuntimeException(algorithmType + " is unknown algorithm type.");
     }

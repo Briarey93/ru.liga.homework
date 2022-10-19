@@ -59,11 +59,13 @@ public class Constants {
     @Getter
     private static final List<String> ALGORITHM =
             Arrays.asList("AVERAGE",
-                    "LASTYEAR");
+                    "LASTYEAR",
+                    "MYSTIC");
     @Getter
     private static final List<String> ALGORITHM_DESCRIPTION =
-            Arrays.asList("среднее арифметическое на основании 7 последних курсов валют",
-                    "прошлогодний курс");
+            Arrays.asList("Среднее арифметическое на основании 7 последних курсов валют",
+                    "Прошлогодний курс",
+                    "Рандомный курс из курсов валют за прошлые года");
 
     @Getter
     private static final List<String> PERIOD =
