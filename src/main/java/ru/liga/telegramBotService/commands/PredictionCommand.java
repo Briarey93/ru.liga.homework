@@ -48,10 +48,6 @@ public class PredictionCommand extends ServiceCommand {
 
         Long chatId = chat.getId();
         Settings settings = TelegramBotService.getUserSettings(chatId);
-
-        StringBuilder sendMsg = new StringBuilder();
-        sendMsg.append(String.format("\"rate %s %s\"\n", settings.getSource(), settings.getPeriod()));
-
         int lengthPeriod = PERIOD_VALUE.get(settings.getPeriod());
 
         CurrencyStatistic predictedCurrencyStatistic = new PredictionService(
@@ -67,7 +63,13 @@ public class PredictionCommand extends ServiceCommand {
             return;
         }
 
+        StringBuilder sendMsg = new StringBuilder();
+        sendMsg.append(String.format("\"rate %s %s %s\"\n",
+                settings.getSource(),
+                settings.getPeriod(),
+                settings.getAlgorithm()));
         parseCurrencyStatistic(sendMsg, lengthPeriod, predictedCurrencyStatistic);
+
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, sendMsg.toString());
 
         log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
@@ -75,11 +77,11 @@ public class PredictionCommand extends ServiceCommand {
 
     }
 
-    private void parseCurrencyStatistic(StringBuilder combineMsg, int lengthPeriod, CurrencyStatistic predictedCurrencyStatistic) {
+    private void parseCurrencyStatistic(StringBuilder sendMsg, int lengthPeriod, CurrencyStatistic predictedCurrencyStatistic) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE dd.MM.yyyy", Locale.ENGLISH);
 
         for (int i = 0; i < lengthPeriod; i++) {
-            combineMsg.append(String.format("    %s - %s\n",
+            sendMsg.append(String.format("    %s - %s\n",
                     predictedCurrencyStatistic.getDates().get(i).format(formatter),
                     predictedCurrencyStatistic.getCurrencyStatistics().get(i)));
         }

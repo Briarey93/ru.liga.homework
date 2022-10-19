@@ -54,10 +54,12 @@ public class Constants {
 
     @Getter
     private static final List<String> ALGORITHM =
-            Arrays.asList("AVERAGE");
+            Arrays.asList("AVERAGE",
+                    "LASTYEAR");
     @Getter
     private static final List<String> ALGORITHM_DESCRIPTION =
-            Arrays.asList("среднее арифметическое на основании 7 последних курсов валют");
+            Arrays.asList("среднее арифметическое на основании 7 последних курсов валют",
+                    "прошлогодний курс");
 
     @Getter
     private static final List<String> PERIOD =

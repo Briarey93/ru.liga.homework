@@ -6,7 +6,7 @@ public interface PrintPredictionFactory {
         if (algorithmType.equalsIgnoreCase("average")) {
             return new PrintPredictionAverage();
         }else if (algorithmType.equalsIgnoreCase("lastYear")) {
-            return new PrintPredictionLastYear();
+            return new PrintPredictionAverage();
         }
         throw new RuntimeException(algorithmType + " is unknown algorithm type.");
     }
