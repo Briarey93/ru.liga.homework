@@ -38,7 +38,7 @@ public class SourceReader {
         }
         file = new File(source);
         if (!file.exists()) {
-            throw new IllegalArgumentException("Исходный файл(%s) не доступен");
+            throw new IllegalArgumentException(String.format("Исходный файл(%s) не доступен", source));
         }
     }
 

@@ -2,9 +2,7 @@ package ru.liga.predictionService;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.liga.predictionService.predictionAlg.PredictionAlgorithm;
-import ru.liga.predictionService.predictionAlg.PredictionAlgorithmFactory;
 import ru.liga.predictionService.predictionPrinter.PrintPrediction;
-import ru.liga.predictionService.predictionPrinter.PrintPredictionFactory;
 
 @Slf4j
 public class PredictionService {
@@ -37,8 +35,8 @@ public class PredictionService {
 
         sourceReader = new SourceReader(currentCurrencyStatistic);
 
-        predictionAlgorithm = PredictionAlgorithmFactory.createPredictionAlgorithm_BasedOnAlgorithmType(ALGORITHM_TYPE);
-        printPrediction = PrintPredictionFactory.createPrinterPrediction_BasedOnAlgorithmType(ALGORITHM_TYPE);
+        predictionAlgorithm = PredictionAlgorithm.getPredictionAlgorithm(ALGORITHM_TYPE);
+        printPrediction = PrintPrediction.getPrintPrediction(ALGORITHM_TYPE);
         log.debug("PredictionService инициализирован");
     }
 
