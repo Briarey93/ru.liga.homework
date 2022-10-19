@@ -21,7 +21,7 @@ import java.util.Map;
 @Slf4j
 public class PredictionCommand extends ServiceCommand {
 
-    private static final String SOURCE_PATH = "src/main/resources/RC_F01_01_2002_T01_10_2022_";
+    private static final String SOURCE_PATH = "src/main/resources/source/";
     private static final String FORMAT = ".csv";
 
     private final Map<String, Integer> PERIOD_VALUE = new HashMap<String, Integer>() {{

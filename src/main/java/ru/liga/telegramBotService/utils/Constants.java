@@ -45,12 +45,16 @@ public class Constants {
     private static final List<String> SOURCE =
             Arrays.asList("USA",
                     "EURO",
-                    "LIRA");
+                    "LIRA",
+                    "LION",
+                    "DRAM");
     @Getter
     private static final List<String> SOURCE_DESCRIPTION =
             Arrays.asList("доллар США",
                     "Евро",
-                    "Турецкая лира");
+                    "Турецкая лира",
+                    "Болгарский лев",
+                    "Армянский драм");
 
     @Getter
     private static final List<String> ALGORITHM =

@@ -12,8 +12,6 @@ public class ApplicationInitialization {
     private static final Map<String, String> getenv = System.getenv();
 
     public static void main(String[] args) {
-//        ConsoleAppService.consoleAppStart();
-
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(new TelegramBotService(getenv.get("BOT_NAME"), getenv.get("BOT_TOKEN")));
