@@ -16,7 +16,7 @@ public class PrintPredictionAverage implements PrintPrediction {
 
         switch (lengthPeriod) {
             case (1):
-                msg.append(String.format("\"rate %s tomorrow\" ", currencyType));
+                msg.append(String.format("\"rate %s day\" ", currencyType));
                 break;
 
             case (7):
