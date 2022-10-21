@@ -40,7 +40,7 @@ public class PredictionAlgorithmLastYear implements PredictionAlgorithm {
         if (currentCurrencyStatistic.getDates().contains(date)) {
             return currentCurrencyStatistic.getCurrencyStatistics()
                     .get(currentCurrencyStatistic.getDates().indexOf(date))
-                    .divide(BigDecimal.valueOf(1), SCALE, RoundingMode.HALF_UP);
+                    .setScale(SCALE, RoundingMode.HALF_UP);
         }
         return predictNextCurrency(currentCurrencyStatistic, date.minusDays(1));
     }
