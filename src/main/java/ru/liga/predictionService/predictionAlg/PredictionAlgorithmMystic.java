@@ -41,7 +41,7 @@ public class PredictionAlgorithmMystic implements PredictionAlgorithm {
         List<RowDto> rowsDto = new ArrayList<>();
         for (int i = 1; i <= date.getYear() - YEAR_STARTS_FROM; i++) {
             for (RowDto row : currentCurrencyStatistic.getRowsDto()) {
-                if (row.getDate().equals(date.minusYears(i))) {
+                if (row.compareTo(date.minusYears(i)) == 0) {
                     rowsDto.add(row);
                 }
             }

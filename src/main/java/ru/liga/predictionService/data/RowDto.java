@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 @Getter
-public class RowDto {
+public class RowDto implements Comparable<LocalDate> {
     private BigDecimal currency;
     private LocalDate date;
 
@@ -35,5 +35,10 @@ public class RowDto {
 
     public void setCurrency(BigDecimal currency) {
         this.currency = currency;
+    }
+
+    @Override
+    public int compareTo(@SuppressWarnings("NullableProblems") LocalDate other) {
+        return this.getDate().compareTo(other);
     }
 }

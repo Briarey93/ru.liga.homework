@@ -36,7 +36,7 @@ public class PredictionAlgorithmLastYear implements PredictionAlgorithm {
         RowDto result = new RowDto();
         result.setDate(date);
         for (RowDto row : currentCurrencyStatistic.getRowsDto()) {
-            if (row.getDate().compareTo(date.minusYears(1)) <= 0) {
+            if (row.compareTo(date.minusYears(1)) <= 0) {
                 result.setCurrency(row.getCurrency());
 
                 log.debug(String.format("Основанием для прошлогоднего курса %s, является курс за %s",
