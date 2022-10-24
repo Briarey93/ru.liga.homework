@@ -13,9 +13,9 @@ public interface PredictionAlgorithm {
      * @param predictionCurrencyStatistic - предсказываемые курсы валют.
      * @param lengthPeriod                - период предсказания.
      */
-    void predict(CurrencyStatistic currentCurrencyStatistic,
-                 CurrencyStatistic predictionCurrencyStatistic,
-                 int lengthPeriod);
+    void predict(final CurrencyStatistic currentCurrencyStatistic,
+                 final CurrencyStatistic predictionCurrencyStatistic,
+                 final int lengthPeriod);
 
     static PredictionAlgorithm getPredictionAlgorithm(String algorithmType) {
         if (algorithmType.equalsIgnoreCase("average")) {

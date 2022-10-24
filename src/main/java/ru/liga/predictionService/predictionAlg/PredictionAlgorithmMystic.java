@@ -27,9 +27,9 @@ public class PredictionAlgorithmMystic implements PredictionAlgorithm {
      * @param lengthPeriod                - период предсказания.
      */
     @Override
-    public void predict(CurrencyStatistic currentCurrencyStatistic,
-                        CurrencyStatistic predictionCurrencyStatistic,
-                        int lengthPeriod) {
+    public void predict(final CurrencyStatistic currentCurrencyStatistic,
+                        final CurrencyStatistic predictionCurrencyStatistic,
+                        final int lengthPeriod) {
         LocalDate date = currentCurrencyStatistic.getRowsDto().get(0).getDate().plusDays(1);
 
         for (int i = 0; i < lengthPeriod; i++) {
@@ -37,7 +37,7 @@ public class PredictionAlgorithmMystic implements PredictionAlgorithm {
         }
     }
 
-    private RowDto predictNextDto(CurrencyStatistic currentCurrencyStatistic, LocalDate date) {
+    private RowDto predictNextDto(final CurrencyStatistic currentCurrencyStatistic, final LocalDate date) {
         List<RowDto> rowsDto = new ArrayList<>();
         for (int i = 1; i < date.getYear() - YEAR_STARTS_FROM; i++) {
             for (RowDto row : currentCurrencyStatistic.getRowsDto()) {
@@ -54,7 +54,8 @@ public class PredictionAlgorithmMystic implements PredictionAlgorithm {
                     "т.к. нет данных курсов данной даты за прошлые года.", date));
         } else {
             result = rowsDto.get((int) (rowsDto.size() * Math.random()));
-            log.debug(String.format("Основанием для мистического курса %s, является курс за %s", date, result.getDate()));
+            log.debug(String.format("Основанием для мистического курса %s, является курс за %s",
+                    date, result.getDate()));
         }
 
 

@@ -10,9 +10,9 @@ import java.util.Locale;
 public class PrintPredictionAverage implements PrintPrediction {
 
     @Override
-    public void print(CurrencyStatistic predictedCurrencyStatistic,
-                      String currencyType,
-                      int lengthPeriod) {
+    public void print(final CurrencyStatistic predictedCurrencyStatistic,
+                      final String currencyType,
+                      final int lengthPeriod) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE dd.MM.yyyy", Locale.ENGLISH);
         StringBuilder msg = new StringBuilder();
 

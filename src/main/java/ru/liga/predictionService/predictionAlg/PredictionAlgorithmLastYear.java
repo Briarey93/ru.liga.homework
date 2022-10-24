@@ -22,9 +22,9 @@ public class PredictionAlgorithmLastYear implements PredictionAlgorithm {
      * @param lengthPeriod                - период предсказания.
      */
     @Override
-    public void predict(CurrencyStatistic currentCurrencyStatistic,
-                        CurrencyStatistic predictionCurrencyStatistic,
-                        int lengthPeriod) {
+    public void predict(final CurrencyStatistic currentCurrencyStatistic,
+                        final CurrencyStatistic predictionCurrencyStatistic,
+                        final int lengthPeriod) {
         LocalDate date = currentCurrencyStatistic.getRowsDto().get(0).getDate().plusDays(1);
 
         for (int i = 0; i < lengthPeriod; i++) {
@@ -39,7 +39,8 @@ public class PredictionAlgorithmLastYear implements PredictionAlgorithm {
             if (row.getDate().compareTo(date.minusYears(1)) <= 0) {
                 result.setCurrency(row.getCurrency());
 
-                log.debug(String.format("Основанием для прошлогоднего курса %s, является курс за %s", date, row.getDate()));
+                log.debug(String.format("Основанием для прошлогоднего курса %s, является курс за %s",
+                        date, row.getDate()));
 
                 return result;
             }

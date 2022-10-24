@@ -3,9 +3,9 @@ package ru.liga.predictionService.predictionPrinter;
 import ru.liga.predictionService.data.CurrencyStatistic;
 
 public interface PrintPrediction {
-    void print(CurrencyStatistic predictedCurrencyStatistic,
-               String currencyType,
-               int lengthPeriod);
+    void print(final CurrencyStatistic predictedCurrencyStatistic,
+               final String currencyType,
+               final int lengthPeriod);
 
     static PrintPrediction getPrintPrediction(String algorithmType) {
         if (algorithmType.equalsIgnoreCase("average")) {
