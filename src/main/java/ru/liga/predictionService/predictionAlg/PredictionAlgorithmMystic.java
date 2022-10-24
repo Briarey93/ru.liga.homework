@@ -39,7 +39,7 @@ public class PredictionAlgorithmMystic implements PredictionAlgorithm {
 
     private RowDto predictNextDto(final CurrencyStatistic currentCurrencyStatistic, final LocalDate date) {
         List<RowDto> rowsDto = new ArrayList<>();
-        for (int i = 1; i < date.getYear() - YEAR_STARTS_FROM; i++) {
+        for (int i = 1; i <= date.getYear() - YEAR_STARTS_FROM; i++) {
             for (RowDto row : currentCurrencyStatistic.getRowsDto()) {
                 if (row.getDate().equals(date.minusYears(i))) {
                     rowsDto.add(row);
