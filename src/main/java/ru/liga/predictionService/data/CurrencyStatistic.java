@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 public class CurrencyStatistic {
 
-    private List<RowDto> rowsDto = new ArrayList<>();
+    private final List<RowDto> rowsDto = new ArrayList<>();
 
     public void addRow(RowDto row) {
         rowsDto.add(row);

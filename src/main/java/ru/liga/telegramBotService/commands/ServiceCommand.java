@@ -1,5 +1,6 @@
 package ru.liga.telegramBotService.commands;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
@@ -10,8 +11,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 /**
  * Суперкласс для сервисных команд.
  */
+@Slf4j
 abstract class ServiceCommand extends BotCommand {
-    private Logger logger = LoggerFactory.getLogger(ServiceCommand.class);
 
     ServiceCommand(String identifier, String description) {
         super(identifier, description);
@@ -20,7 +21,11 @@ abstract class ServiceCommand extends BotCommand {
     /**
      * Отправка ответа пользователю.
      */
-    void sendAnswer(AbsSender absSender, Long chatId, String commandName, String userName, String text) {
+    void sendAnswer(AbsSender absSender,
+                    Long chatId,
+                    String commandName,
+                    String userName,
+                    String text) {
         SendMessage message = new SendMessage();
         message.enableMarkdown(true);
         message.setChatId(chatId.toString());
@@ -28,7 +33,8 @@ abstract class ServiceCommand extends BotCommand {
         try {
             absSender.execute(message);
         } catch (TelegramApiException e) {
-            logger.error(String.format("Ошибка %s. Команда %s. Пользователь: %s", e.getMessage(), commandName, userName));
+            log.error(String.format("Ошибка %s. Команда %s. Пользователь: %s",
+                    e.getMessage(), commandName, userName));
             e.printStackTrace();
         }
     }
