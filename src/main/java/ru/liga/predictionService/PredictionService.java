@@ -1,6 +1,8 @@
 package ru.liga.predictionService;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.liga.predictionService.data.CurrencyStatistic;
+import ru.liga.predictionService.fileParse.SourceReader;
 import ru.liga.predictionService.predictionAlg.PredictionAlgorithm;
 import ru.liga.predictionService.predictionPrinter.PrintPrediction;
 
@@ -9,16 +11,15 @@ public class PredictionService {
 
     private final String SOURCE;
     private final String CURRENCY_TYPE;
-    private final String ALGORITHM_TYPE;
     private final int LENGTH_PERIOD;
 
-    private SourceReader sourceReader;
+    private final SourceReader sourceReader;
 
-    private CurrencyStatistic currentCurrencyStatistic;
-    private CurrencyStatistic predictionCurrencyStatistic;
+    private final CurrencyStatistic currentCurrencyStatistic;
+    private final CurrencyStatistic predictionCurrencyStatistic;
 
-    private PredictionAlgorithm predictionAlgorithm;
-    private PrintPrediction printPrediction;
+    private final PredictionAlgorithm predictionAlgorithm;
+    private final PrintPrediction printPrediction;
 
 
     public PredictionService(final String source,
@@ -27,7 +28,6 @@ public class PredictionService {
                              final int lengthPeriod) {
         SOURCE = source;
         CURRENCY_TYPE = currencyType;
-        ALGORITHM_TYPE = algorithmType;
         LENGTH_PERIOD = lengthPeriod;
 
         currentCurrencyStatistic = new CurrencyStatistic();
@@ -35,8 +35,8 @@ public class PredictionService {
 
         sourceReader = new SourceReader(currentCurrencyStatistic);
 
-        predictionAlgorithm = PredictionAlgorithm.getPredictionAlgorithm(ALGORITHM_TYPE);
-        printPrediction = PrintPrediction.getPrintPrediction(ALGORITHM_TYPE);
+        predictionAlgorithm = PredictionAlgorithm.getPredictionAlgorithm(algorithmType);
+        printPrediction = PrintPrediction.getPrintPrediction(algorithmType);
         log.debug("PredictionService инициализирован");
     }
 
@@ -58,6 +58,7 @@ public class PredictionService {
             predictionAlgorithm.predict(currentCurrencyStatistic, predictionCurrencyStatistic, LENGTH_PERIOD);
         } catch (Exception e) {
             log.error(e.getMessage());
+            e.printStackTrace();
             return null;
         }
 

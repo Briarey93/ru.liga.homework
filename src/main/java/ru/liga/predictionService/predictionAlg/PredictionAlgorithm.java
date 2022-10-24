@@ -1,6 +1,6 @@
 package ru.liga.predictionService.predictionAlg;
 
-import ru.liga.predictionService.CurrencyStatistic;
+import ru.liga.predictionService.data.CurrencyStatistic;
 
 /**
  * Интерфейс алгоритма предсказаний курса валют.

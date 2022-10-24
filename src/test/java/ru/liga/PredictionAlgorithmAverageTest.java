@@ -1,15 +1,8 @@
 package ru.liga;
 
-import org.assertj.core.api.Assertions;
-import org.junit.Test;
-import ru.liga.predictionService.CurrencyStatistic;
-import ru.liga.predictionService.predictionAlg.PredictionAlgorithmAverage;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class PredictionAlgorithmAverageTest {
 

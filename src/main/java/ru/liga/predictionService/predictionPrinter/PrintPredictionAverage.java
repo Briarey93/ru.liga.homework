@@ -1,7 +1,7 @@
 package ru.liga.predictionService.predictionPrinter;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.liga.predictionService.CurrencyStatistic;
+import ru.liga.predictionService.data.CurrencyStatistic;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -10,7 +10,9 @@ import java.util.Locale;
 public class PrintPredictionAverage implements PrintPrediction {
 
     @Override
-    public void print(CurrencyStatistic predictedCurrencyStatistic, String currencyType, int lengthPeriod) {
+    public void print(CurrencyStatistic predictedCurrencyStatistic,
+                      String currencyType,
+                      int lengthPeriod) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE dd.MM.yyyy", Locale.ENGLISH);
         StringBuilder msg = new StringBuilder();
 
@@ -29,8 +31,8 @@ public class PrintPredictionAverage implements PrintPrediction {
         }
 
         for (int i = 0; i < lengthPeriod; i++) {
-            msg.append(String.format("\t%s - ", predictedCurrencyStatistic.getDates().get(i).format(formatter)));
-            msg.append(String.format("%.2f\n", predictedCurrencyStatistic.getCurrencyStatistics().get(i)));
+            msg.append(String.format("\t%s - ", predictedCurrencyStatistic.getRowsDto().get(i).getDate().format(formatter)));
+            msg.append(String.format("%.2f\n", predictedCurrencyStatistic.getRowsDto().get(i).getCurrency()));
         }
         log.debug("\n" + msg);
     }

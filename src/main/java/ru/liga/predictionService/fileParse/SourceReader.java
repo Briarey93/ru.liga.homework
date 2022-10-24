@@ -1,6 +1,7 @@
-package ru.liga.predictionService;
+package ru.liga.predictionService.fileParse;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.liga.predictionService.data.CurrencyStatistic;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,7 +22,7 @@ public class SourceReader {
     /**
      * Текущие валюты, считываемые из файла.
      */
-    private CurrencyStatistic currentCurrencyStatistic;
+    private final CurrencyStatistic currentCurrencyStatistic;
 
     public SourceReader(CurrencyStatistic currentCurrencyStatistic) {
         this.currentCurrencyStatistic = currentCurrencyStatistic;
@@ -46,6 +47,7 @@ public class SourceReader {
      * Чтение файла.
      */
     public void readSource() {
+        log.debug(String.format("Начато чтение файла %s", file));
         try (FileReader fr = new FileReader(file);
              BufferedReader br = new BufferedReader(fr)
         ) {
@@ -53,6 +55,7 @@ public class SourceReader {
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
+        log.debug(String.format("Завершено чтение файла %s", file));
     }
 
     /**

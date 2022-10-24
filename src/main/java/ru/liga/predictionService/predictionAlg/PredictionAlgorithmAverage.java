@@ -1,10 +1,10 @@
 package ru.liga.predictionService.predictionAlg;
 
-import ru.liga.predictionService.CurrencyStatistic;
+import ru.liga.predictionService.data.CurrencyStatistic;
+import ru.liga.predictionService.data.RowDto;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,27 +31,29 @@ public class PredictionAlgorithmAverage implements PredictionAlgorithm {
     public void predict(final CurrencyStatistic currentCurrencyStatistic,
                         final CurrencyStatistic predictionCurrencyStatistic,
                         final int lengthPeriod) {
-        List<BigDecimal> courseList;
+        List<RowDto> rowsDto;
         try {
-            courseList = new ArrayList<>(currentCurrencyStatistic.getCurrencyStatistics().subList(0, AVERAGE));
+            rowsDto = new ArrayList<>(currentCurrencyStatistic.getRowsDto().subList(0, AVERAGE));
         } catch (Exception e) {
             throw new RuntimeException("Недостаточно данных для алгорифмического рассчёта предсказаний");
         }
 
-        LocalDate date = currentCurrencyStatistic.getDates().get(0).plusDays(1);
-
         for (int i = 0; i < lengthPeriod; i++) {
-            predictionCurrencyStatistic.getDates().add(date.plusDays(i));
-            courseList.add(0, predictNextCurrency(courseList.subList(0, AVERAGE)));
+            rowsDto.add(0, predictNextDto(rowsDto.subList(0, AVERAGE)));
         }
 
-        predictionCurrencyStatistic.getCurrencyStatistics().addAll(courseList.subList(0, lengthPeriod));
-        Collections.reverse(predictionCurrencyStatistic.getCurrencyStatistics());
+        predictionCurrencyStatistic.addRowAll(rowsDto.subList(0, lengthPeriod));
+        Collections.reverse(predictionCurrencyStatistic.getRowsDto());
     }
 
-    private BigDecimal predictNextCurrency(List<BigDecimal> courseList) {
-        return courseList.stream()
-                .reduce(BigDecimal.ZERO, BigDecimal::add)
-                .divide(BigDecimal.valueOf(AVERAGE), SCALE, RoundingMode.HALF_UP);
+    private RowDto predictNextDto(final List<RowDto> sublistDto) {
+        RowDto result = new RowDto();
+        BigDecimal currencyResult = new BigDecimal(0);
+        result.setDate(sublistDto.get(0).getDate().plusDays(1));
+        for (int i = 0; i < AVERAGE; i++) {
+            currencyResult = currencyResult.add(sublistDto.get(i).getCurrency());
+        }
+        result.setCurrency(currencyResult.divide(BigDecimal.valueOf(AVERAGE), SCALE, RoundingMode.HALF_UP));
+        return result;
     }
 }

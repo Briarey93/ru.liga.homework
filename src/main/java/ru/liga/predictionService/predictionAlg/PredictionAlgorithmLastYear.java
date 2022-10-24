@@ -1,9 +1,9 @@
 package ru.liga.predictionService.predictionAlg;
 
-import ru.liga.predictionService.CurrencyStatistic;
+import lombok.extern.slf4j.Slf4j;
+import ru.liga.predictionService.data.CurrencyStatistic;
+import ru.liga.predictionService.data.RowDto;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 
 /**
@@ -11,9 +11,8 @@ import java.time.LocalDate;
  * результатом является курс валюты за прошлый год.
  * Если в прошлом году за эту дату не было курса, то берётся предидущий курс.
  */
+@Slf4j
 public class PredictionAlgorithmLastYear implements PredictionAlgorithm {
-
-    private final static int SCALE = 2;
 
     /**
      * Алгоритм предсказания валют.
@@ -26,22 +25,25 @@ public class PredictionAlgorithmLastYear implements PredictionAlgorithm {
     public void predict(CurrencyStatistic currentCurrencyStatistic,
                         CurrencyStatistic predictionCurrencyStatistic,
                         int lengthPeriod) {
-
-        LocalDate date = currentCurrencyStatistic.getDates().get(0).plusDays(1);
+        LocalDate date = currentCurrencyStatistic.getRowsDto().get(0).getDate().plusDays(1);
 
         for (int i = 0; i < lengthPeriod; i++) {
-            predictionCurrencyStatistic.getDates().add(date.plusDays(i));
-            predictionCurrencyStatistic.getCurrencyStatistics()
-                    .add(predictNextCurrency(currentCurrencyStatistic, date.plusDays(i).minusYears(1)));
+            predictionCurrencyStatistic.addRow(predictNextDto(currentCurrencyStatistic, date.plusDays(i)));
         }
     }
 
-    private BigDecimal predictNextCurrency(CurrencyStatistic currentCurrencyStatistic, LocalDate date) {
-        if (currentCurrencyStatistic.getDates().contains(date)) {
-            return currentCurrencyStatistic.getCurrencyStatistics()
-                    .get(currentCurrencyStatistic.getDates().indexOf(date))
-                    .setScale(SCALE, RoundingMode.HALF_UP);
+    private RowDto predictNextDto(final CurrencyStatistic currentCurrencyStatistic, final LocalDate date) {
+        RowDto result = new RowDto();
+        result.setDate(date);
+        for (RowDto row : currentCurrencyStatistic.getRowsDto()) {
+            if (row.getDate().compareTo(date.minusYears(1)) <= 0) {
+                result.setCurrency(row.getCurrency());
+
+                log.debug(String.format("Основанием для прошлогоднего курса %s, является курс за %s", date, row.getDate()));
+
+                return result;
+            }
         }
-        return predictNextCurrency(currentCurrencyStatistic, date.minusDays(1));
+        return null;
     }
 }

@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import ru.liga.predictionService.CurrencyStatistic;
 import ru.liga.predictionService.PredictionService;
+import ru.liga.predictionService.data.CurrencyStatistic;
 import ru.liga.telegramBotService.TelegramBotService;
 import ru.liga.telegramBotService.utils.Settings;
 import ru.liga.telegramBotService.utils.Utils;
@@ -58,8 +58,8 @@ public class PredictionCommand extends ServiceCommand {
                 .executeApplication();
 
         if (predictedCurrencyStatistic == null) {
-            log.error(String.format("Пользователь %s. Команда %s вышла с ошибкой.", userName,
-                    this.getCommandIdentifier()));
+            log.error(String.format("Пользователь %s. Команда %s вышла с ошибкой.",
+                    userName, this.getCommandIdentifier()));
             return;
         }
 
@@ -68,22 +68,22 @@ public class PredictionCommand extends ServiceCommand {
                 settings.getSource(),
                 settings.getPeriod(),
                 settings.getAlgorithm()));
-        parseCurrencyStatistic(sendMsg, lengthPeriod, predictedCurrencyStatistic);
+        parsePredictedCurrencyStatistic(sendMsg, lengthPeriod, predictedCurrencyStatistic);
 
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, sendMsg.toString());
 
-        log.debug(String.format("Пользователь %s. Завершено выполнение команды %s", userName,
-                this.getCommandIdentifier()));
+        log.debug(String.format("Пользователь %s. Завершено выполнение команды %s",
+                userName, this.getCommandIdentifier()));
 
     }
 
-    private void parseCurrencyStatistic(StringBuilder sendMsg, int lengthPeriod, CurrencyStatistic predictedCurrencyStatistic) {
+    private void parsePredictedCurrencyStatistic(StringBuilder sendMsg, int lengthPeriod, CurrencyStatistic predictedCurrencyStatistic) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE dd.MM.yyyy", Locale.ENGLISH);
 
         for (int i = 0; i < lengthPeriod; i++) {
             sendMsg.append(String.format("    %s - %s\n",
-                    predictedCurrencyStatistic.getDates().get(i).format(formatter),
-                    predictedCurrencyStatistic.getCurrencyStatistics().get(i)));
+                    predictedCurrencyStatistic.getRowsDto().get(i).getDate().format(formatter),
+                    predictedCurrencyStatistic.getRowsDto().get(i).getCurrency()));
         }
     }
 }
