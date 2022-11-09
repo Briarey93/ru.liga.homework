@@ -1,0 +1,1 @@
+worker: java -Xmx300m -Xss512k -XX:CICompilerCount=2 -Dfile.encodinheroku ps:scale worker=1g=UTF-8 -cp ./target/classes:./target/dependency/* ru.liga.ApplicationInitialization
